@@ -50,72 +50,7 @@
     </div>
   </div>
 </div>
-{% schema %}
-{
-  "name": "Year Make Model",
-  "settings": [
-	{
-      "type": "paragraph",
-      "content": "In order to use this section, you need to add the values in makeObject.js file which can be found under assets folder on theme edit area. Once done you need to add the keywords to the relevant product as tags and it will be available when searched."
-    },
-	{
-      "type": "text",
-      "id": "heading",
-      "label": "Heading Main",
-      "default": "Filter By Year, Make, Model"
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading Color",
-      "default": "#ffde00"
-    },
-	{
-      "type": "checkbox",
-      "id": "fullwidth",
-      "label": "Set Div fullwidth?",
-      "default": false
-    },
-	{
-      "type": "checkbox",
-      "id": "background",
-      "label": "Add Background",
-      "default": false
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Sections Background Color",
-      "info": "This option allows you to set different background color than default one for the section.",
-      "default": "#14151b"
-    },
-	{
-      "type": "image_picker",
-      "id": "bg-image",
-      "label": "Sections Background Image",
-      "info": "If empty then background color will be applied."
-    },
-    {
-      "type": "checkbox",
-      "id": "top_margin",
-      "label": "Add top margin?",
-      "info": "White empty space above section. Won't apply when full width option enabled.",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "bottom_padding",
-      "label": "Add bottom margin?",
-      "info": "White empty space below section. Won't apply when full width option enabled.",
-      "default": false
-    }
-  ],
-  "presets": [{
-    "name": "Year Make Model",
-    "category": "Feature Sections"
-  }]
-}
-{% endschema %}
+
 <style>
   {% if section.settings.background %}
   {% if section.settings.bg-image != blank %}
@@ -136,7 +71,7 @@
   }
 </style>
 {{ 'makeObject.js' | asset_url | script_tag }}
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   // This section creates the dynamic dropdowns
 
   window.onload = function() {
@@ -189,70 +124,8 @@
       var year = $('#yearSel').val();
       console.log("Year: ", year);
       var url = window.location.origin + "/collections/all/make_" + make + "+model_" + model + "+gen_" + year;
-      console.log("URL: ", url);
-      window.location.href = url;
-      return false;
-       
-    });
-  });
-
-</script> -->
-
-<script type="text/javascript">
-  // This section creates the dynamic dropdowns
-
-  window.onload = function() {
-    var makeSel = document.getElementById("makeSel"),
-        modelSel = document.getElementById("modelSel"),
-        yearSel = document.getElementById("yearSel");
-    for (var make in makeObject) {
-      makeSel.options[makeSel.options.length] = new Option(make, make);
-    }
-    makeSel.onchange = function() {
-      modelSel.length = 1; // remove all options bar first
-      yearSel.length = 1; // remove all options bar first
-      if (this.selectedIndex < 1) return; // done   
-      for (var model in makeObject[this.value]) {
-        modelSel.options[modelSel.options.length] = new Option(model, model);
-      }
-    }
-    makeSel.onchange(); // reset in case page is reloaded
-    modelSel.onchange = function() {
-      yearSel.length = 1; // remove all options bar first
-      if (this.selectedIndex < 1) return; // done   
-      var years = makeObject[makeSel.value][this.value];
-      for (var i = 0; i < years.length; i++) {
-        yearSel.options[yearSel.options.length] = new Option(years[i], years[i]);
-      }
-    }
-  }
-
-  // The buildUrl function creates the query string on the values of the IDs in the HTML below
-
-  function buildUrl() {
-    var url = "";  // Change this line to your home page URL
-    var make = document.querySelector('#makeSel').value;
-    var model = document.querySelector('#modelSel').value;
-    var year = document.querySelector('#yearSel').value;
-    var qs = encodeURIComponent(make + ' ' + model + ' ' + year);
-    if (qs.length > 0) {
-      url = url + "/collections/all?constraint=" + qs;
-      //url = url + "/search?type=product&q=" + qs;
-    }
-    return url;
-  }
-
-  $(document).ready(function() {
-    $(document).on('click', '#main-sumbit-button', function (event) {
-    
-      event.stopImmediatePropagation();
-      var make = $('#makeSel').val().toLowerCase().replace(/\s/g, '-');
-      var model = $('#modelSel').val().toLowerCase().replace(/\s/g, '-');
-      var year = $('#yearSel').val().toLowerCase().replace(/\s/g, '-').replace(/\+/g, '');
-      console.log("Year: ", year);
-      var url = window.location.origin + "/collections/all/make_" + make + "+model_" + model + "+gen_" + year;
       url = url.replaceAll(' ', '-');
-      console.log("URL binarychai: ", url);
+      console.log("URL: ", url);
       window.location.href = url;
       return false;
        

@@ -315,14 +315,14 @@ width: 360px;
 }
 .mobilemenu span.no-close a,.mobilemenu ul li ul span.ttclose a { background:none; }
 .mobilemenu span.up a { 
-  background: url("//euautoparts.co.uk/cdn/shop/t/11/assets/menu_up.png?1448") no-repeat scroll 50% 50%;
+  background: url("//euautoparts.co.uk/cdn/shop/t/11/assets/menu_up.png?2224") no-repeat scroll 50% 50%;
     }
 /*.mobilemenu span.head a:hover*/
 .mobilemenu li.active>span.ttclose a {
-  background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/menu_up.png?1448) no-repeat 50% 50%;
+  background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/menu_up.png?2224) no-repeat 50% 50%;
 }
 .mobilemenu li.selected span.ttclose a {
-  background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/menu_up.png?1448) no-repeat 50% 50%;
+  background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/menu_up.png?2224) no-repeat 50% 50%;
 }
 .menu-mobile {
   display: inline-block;

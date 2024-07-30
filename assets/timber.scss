@@ -165,11 +165,11 @@ $accentFontWeight: 500;
 // Icons
 @font-face {
   font-family: "icons";
-  src: url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.eot?1448');
-  src: url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.eot?1448#iefix') format("embedded-opentype"),
-       url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.woff?1448') format("woff"),
-       url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.ttf?1448') format("truetype"),
-       url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.svg?1448#timber-icons') format("svg");
+  src: url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.eot?2224');
+  src: url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.eot?2224#iefix') format("embedded-opentype"),
+       url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.woff?2224') format("woff"),
+       url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.ttf?2224') format("truetype"),
+       url('//euautoparts.co.uk/cdn/shop/t/11/assets/icons.svg?2224#timber-icons') format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -718,10 +718,10 @@ html, body {
   Simply upload a file called 'bg.jpg' and delete lines as necessary.
 ==============================================================================*/
 // body {
-  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?1448) 0 0 repeat scroll;
-  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?1448) 0 0 no-repeat scroll;
-  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?1448) 0 0 repeat fixed;
-  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?1448) 0 0 no-repeat fixed;
+  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?2224) 0 0 repeat scroll;
+  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?2224) 0 0 no-repeat scroll;
+  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?2224) 0 0 repeat fixed;
+  // background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/bg.jpg?2224) 0 0 no-repeat fixed;
 
   // Fullscreen background
   // @include prefix('background-size', 'cover');
@@ -1473,7 +1473,7 @@ select {
           appearance: none;
   background-position: right center;
   background: {
-    image: url('//euautoparts.co.uk/cdn/shop/t/11/assets/arrow-down.svg?1448');
+    image: url('//euautoparts.co.uk/cdn/shop/t/11/assets/arrow-down.svg?2224');
     repeat: no-repeat;
     position: right 10px center;
     color: transparent;
@@ -4067,7 +4067,7 @@ img.mfp-img {
   width: 100%;
 
   @if $passwordPageUseBgImage {
-    background-image: url(//euautoparts.co.uk/cdn/shop/t/11/assets/password-page-background.jpg?1448);
+    background-image: url(//euautoparts.co.uk/cdn/shop/t/11/assets/password-page-background.jpg?2224);
     background-size: cover;
     background-repeat: no-repeat;
     color: #ffffff;

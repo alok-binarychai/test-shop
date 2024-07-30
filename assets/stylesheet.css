@@ -82,7 +82,7 @@ h6 {
   font-size: 10.2px;
 }
 a {
-  color: #838896;
+  color: #ffffff;
   cursor: pointer;
   -webkit-transition: all 300ms ease-in-out;
   -moz-transition: all 300ms ease-in-out;
@@ -323,7 +323,7 @@ a:hover,.banner-3 a:hover::before,
 }
 .tt-product2 .owl-carousel.owl-theme .owl-nav div, .common-home .owl-carousel.owl-theme .owl-nav div {
   border: 2px solid #21252c;
-  color: #838896;
+  color: #ffffff;
 }
 .owl-carousel.owl-theme .owl-nav div:before {
   font-family: "Ionicons";
@@ -456,7 +456,7 @@ a:hover,.banner-3 a:hover::before,
 #dialog-normal .newletter-title {display: block;}
 
 #dialog-normal .newletter-title label {
-  color: #838896;
+  color: #ffffff;
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
@@ -704,7 +704,7 @@ header .box-setting {
   line-height: 40px;
   cursor: pointer;
   box-shadow: none !important;
-  /*background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_setting.png?1448) center no-repeat;*/
+  /*background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_setting.png?2224) center no-repeat;*/
 }
 .hd4 .setting-button,.hd4 #cart > button {
   color: #fff;
@@ -712,20 +712,20 @@ header .box-setting {
 
 }
 /*.setting-button:hover {
-background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_setting_hover.png?1448) center no-repeat;
+background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_setting_hover.png?2224) center no-repeat;
 }*/
 #cart > button {
   background: none;
-  /* background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_cart.png?1448) center no-repeat;*/
+  /* background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_cart.png?2224) center no-repeat;*/
 }
 .hd4 #cart > button {
-  /*background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_cart_black.png?1448) center no-repeat;*/
+  /*background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_cart_black.png?2224) center no-repeat;*/
 }
 .setting-button > i:hover,#cart > button > i:hover { 
   color : #e51515;
 }
 #cart > button > i:hover {
-  /* background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_cart_hover.png?1448) center no-repeat;*/
+  /* background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon_cart_hover.png?2224) center no-repeat;*/
 }
 header .setting-content .text-ex,header .setting-content  .btn-link-current{
   margin-right: 9px;
@@ -796,7 +796,7 @@ header.hd4 .btn-group .dropdown-menu li> button{
   height: inherit;
   border-radius: 0;
   text-align: left;
-  color: #838896;
+  color: #ffffff;
 }
 header .btn-group .dropdown-menu li > a:hover,
 header .btn-group .dropdown-menu li> button:hover {
@@ -1530,7 +1530,7 @@ body:not(.common-home) header:not(.fix-header) .hozmenu-container{
   font-size: 24px;
   font-weight: 200;
   line-height: 1.1;
-  color: #838896;
+  color: #ffffff;
 }
 .static-welcome .content .text h3 span {
   display: block;
@@ -1749,7 +1749,7 @@ body:not(.common-home) header:not(.fix-header) .hozmenu-container{
   
 }
 .common-home .product-name a {
-  color: #838896;
+  color: #ffffff;
 }
 .common-home .item-inner .ratings {
   border-bottom: 1px solid #21252c;
@@ -1759,7 +1759,7 @@ body:not(.common-home) header:not(.fix-header) .hozmenu-container{
 }
 .common-home .item-inner  button.btn-cart {
   background: #21252c;
-  color: #838896 !important;
+  color: #ffffff !important;
 }
 .common-home .item-inner  button.btn-cart:hover {
   background:#e51515;
@@ -1942,7 +1942,7 @@ body:not(.common-home) header:not(.fix-header) .hozmenu-container{
 }
 .item-inner  button.btn-cart {
   background: #21252c;
-  color: #838896 !important ;
+  color: #ffffff !important ;
   text-transform: uppercase;
   line-height: 44px;
   width: 100%;
@@ -2127,10 +2127,10 @@ button.btn-compare:before {
 .price-box p.old-price .price {
   text-decoration: line-through;
   font-weight: 200;
-  color: #838896;
+  color: #ffffff;
 }
 .common-home .price-box p.old-price .price {
-  color: #838896;
+  color: #ffffff;
 }
 .rate-special {
   color: #30343c;
@@ -2395,7 +2395,7 @@ button.btn-compare:before {
 .list-style .product-name {
 }
 .ocbestsellerproducts.list-style .product-name a {
-  color: #838896;
+  color: #ffffff;
 }
 .ocbestsellerproducts .list-style .product-name a:hover {
   color: #e51515;
@@ -2576,7 +2576,7 @@ button.btn-compare:before {
 }
 .tabs-category-slider .tabs-categorys li a {
   font-size: 14px;
-  color: #838896;
+  color: #ffffff;
   line-height: 30px;
   text-transform: uppercase;
   font-weight: 200;
@@ -2858,7 +2858,7 @@ button.btn-compare:before {
   right: 0;
 }
 .testimonial-box a {
-  color: #838896;
+  color: #ffffff;
 }
 .testimonial-author {
   text-transform: uppercase;
@@ -3161,7 +3161,7 @@ content: "\e67f";
   position: relative;
   margin-bottom: 13px;
   margin-top: 10px;
-  color: #838896;
+  color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3205,7 +3205,7 @@ content: "\e67f";
   color: #e51515;
 }
 .menu-recent .read-more {
-  color: #838896;
+  color: #ffffff;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 500;
@@ -3288,7 +3288,7 @@ ul.link-follow li a {
   position: relative;
   display: inline-block;
   vertical-align: top;
-  color: #838896;
+  color: #ffffff;
   font-size: 0;
   line-height: 30px;
   width: 30px;
@@ -3325,7 +3325,7 @@ footer{
 }
 footer .col-footer{
   margin-bottom: 30px;
-  border-right: 1px solid rgba(90, 96, 105, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
 }
 footer .col-footer:last-child { 
   border: 0;
@@ -3344,7 +3344,7 @@ footer h4 {
   color: #ffffff;
 }
 .col1 .footer-title {
-  display: none;
+  /* display: none; */
 }
 .footer-content {
   line-height: 24px;
@@ -3355,7 +3355,7 @@ footer h4 {
   margin-bottom: 34px;
 }
 .footer-content .des {
-  color: #5a6069;
+  color: #ffffff;
   margin-bottom:0;
   letter-spacing: 0.25px;
 }
@@ -3421,7 +3421,7 @@ footer .list-unstyled.text-content li a:hover{
   padding-left: 7px;
 }
 footer .list-unstyled.text-content li a{
-  color: #5a6069;
+  color: #ffffff;
   display: block;
   font-weight: 400;
   padding: 6px 0;
@@ -3477,12 +3477,12 @@ footer .list-unstyled.text-content li a{
   display: inline-block;
   vertical-align: top;
   width: 100%;
-  border-top: 1px solid rgba(131, 136, 150, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
   text-align: center;
 }
 .footer-bottom .footer-copyright {
   float: left;
-  color: #838896;
+  color: #ffffff;
   font-size: 13px;
   background: none;
   text-transform: capitalize;
@@ -3638,7 +3638,7 @@ footer .list-unstyled.text-content li a{
   line-height: 35px;
   padding: 0;
   font-size: 12px;
-  color: #838896;
+  color: #ffffff;
   display: inline-block;
   vertical-align: top;
   padding: 5px 0;
@@ -3687,7 +3687,7 @@ footer .list-unstyled.text-content li a{
   vertical-align: top;
   line-height: 35px;
   margin: 0;
-  color: #838896;
+  color: #ffffff;
   font-size: 14px;
   margin-right: 8px;
 }
@@ -3695,7 +3695,7 @@ footer .list-unstyled.text-content li a{
   padding: 0 15px;
   height: 35px;
   font-size: 13px;
-  color: #838896;
+  color: #000;
   border-radius: 25px;
   display: inline-block;
   vertical-align: top;
@@ -3954,7 +3954,7 @@ label[for='Quantity']{
   padding: 5px 0;
   margin-right: 30px;
   margin-bottom: 0;
-  color: #838896;
+  color: #ffffff;
 }
 .product-info-main .button-cart{
   float: left;
@@ -3963,7 +3963,7 @@ label[for='Quantity']{
   padding: 0 40px;
   line-height: 42px;
   background: #21252c;
-  color: #838896;
+  color: #ffffff;
   font-size: 16px;
 }
 .product-info-main .button-cart:hover {
@@ -5042,9 +5042,18 @@ background: url(//euautoparts.co.uk/cdn/shop/t/11/assets/icon-btn-cart-hover.png
 }
 
 .product-thumb .caption .product-name a {
-  color:#5a6069;;
+  color:#fff;
 }
 
 .cart .wrapper{
   background-color:#fff;
+}
+.shopify-challenge__button{
+  color:#000 !important;
+}
+.shopify-challenge__button:hover{
+  color:#fff !important;
+}
+#product-category .col-xs-12.product-item .product-name a{
+  color: #000;
 }

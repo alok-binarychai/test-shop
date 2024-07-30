@@ -1,3 +1,23 @@
+<style>
+  @media(min-width: 991px){
+    footer .col-footer{
+      min-height: 330px;
+    }
+  }
+ @media(max-width: 991px){
+    footer .col-footer{
+          border-right: 0;
+    }
+   /* .footer-top .row{
+    display: flex;
+    flex-direction: column;
+   }
+   .ac-menu{
+     order: -1;
+   } */
+  }
+</style>
+
 <!--Footer Start-->
 {% include section.settings.footer_layout %}
 <!--End of Footer-->
@@ -63,6 +83,11 @@
              "id": "footer_address",
              "label": "Contact Address",
 			"default": "No 40 Baria Sreet 133/2, NewYork, USA."
+          },
+           {
+             "type": "text",
+             "id": "footer_company",
+             "label": "Company No"
           },
           {
              "type": "text",

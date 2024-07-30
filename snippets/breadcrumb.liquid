@@ -27,8 +27,8 @@
         {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
         {{ collection.title | link_to: url }}
 
-
-        {% for tag in current_tags %}
+      {% comment %}
+       {% for tag in current_tags %}
 
         {% assign is_advanced_tag = false %}
         {% assign cat = tag | split: '_' | first %}
@@ -49,6 +49,7 @@
         {% endunless %}
 
         {% endfor %}
+        {% endcomment %}
 
         {% else %}
 

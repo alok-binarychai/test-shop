@@ -11,7 +11,6 @@
 }
 .product-meta-information {
   display: flex;
-  justify-content: space-between;
   gap: 15px;
   flex-wrap: wrap;
 }
@@ -32,7 +31,7 @@
   gap: 10px;
 }
 .top-meta p:first-child {
-  width: 47px;
+  width: 100%;
 }
 @media (max-width: 600px) {
   .meta-info {

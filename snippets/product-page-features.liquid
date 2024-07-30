@@ -2,14 +2,15 @@
 {% liquid
   assign current_variant = product.selected_or_first_available_variant
 %}
+
 {% form 'product', product, id: 'form_buy', name: 'form_buy' %}
   {%- for block in section.blocks -%}
     {%- if block.type == 'reviews' -%}
       {% capture review_cclass %} mt{{ block.settings.mt }} {% endcapture %}
       {% render 'review', cclass: review_cclass %}
 
-       {%- elsif block.type == 'liquid' -%}
-         <div>{{ block.settings.liquid }}</div>
+    {%- elsif block.type == 'liquid' -%}
+      <div>{{ block.settings.liquid }}</div>
     {%- elsif block.type == 'title' -%}
       <h2
         class="product-name mt{{ block.settings.mt }}"
@@ -18,7 +19,6 @@
       >
         {{ product.title | escape }}
       </h2>
-
     {%- elsif block.type == 'text' -%}
       <div class="item_type mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
         {{- block.settings.text -}}
@@ -141,7 +141,7 @@
     {%- elsif block.type == 'deal' -%}
       {% if product.description contains '[deal]' %}
         <div class="item-inner mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
-            <div id="Countdown{{product.id}}" class="box-timer cc pp"></div>
+          <div id="Countdown{{product.id}}" class="box-timer cc pp"></div>
         </div>
         <script type="text/javascript">
           $(function () {
@@ -196,87 +196,87 @@
         {% endif %}
       </div>
     {%- elsif block.type == 'size-chart' %}
-    <div class="form-group mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
-      {% if block.settings.size_chart_src != 'none' %}
-        <div class="col-md-12">
-          <p class="mb-8">
-            <i class="fas fa-tape"></i>
-            <a class="text-reset text-decoration-underline m-l-2" data-toggle="modal" href="#modalSizeChart">
-              {{- 'products.product.size_chart' | t -}}
-            </a>
-          </p>
-    
-          <!-- Modal content -->
-          <div class="modal fade" id="modalSizeChart" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">{{ 'products.product.size_chart' | t }}</h5>
-                  <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  {% case block.settings.size_chart_src %}
-                    {% when 'image' %}
-                      {% if block.settings.size_chart_image %}
-                        <img
-                          src="{{ block.settings.size_chart_image | image_url }}"
-                          alt="{{ 'products.product.size_chart' | t }}"
-                          width="auto"
-                          height="auto"
-                          loading="lazy"
-                          class="img-responsive"
-                        >
-                      {% endif %}
-    
-                    {% when 'html' %}
-                      {% if block.settings.size_chart_html %}
-                        {{ block.settings.size_chart_html }}
-                      {% endif %}
-    
-                    {% when 'page' %}
-                      {% if block.settings.size_chart_page %}
-                        {{ block.settings.size_chart_page.content }}
-                      {% endif %}
-                  {% endcase %}
+      <div class="form-group mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        {% if block.settings.size_chart_src != 'none' %}
+          <div class="col-md-12">
+            <p class="mb-8">
+              <i class="fas fa-tape"></i>
+              <a class="text-reset text-decoration-underline m-l-2" data-toggle="modal" href="#modalSizeChart">
+                {{- 'products.product.size_chart' | t -}}
+              </a>
+            </p>
+
+            <!-- Modal content -->
+            <div class="modal fade" id="modalSizeChart" tabindex="-1">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">{{ 'products.product.size_chart' | t }}</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {% case block.settings.size_chart_src %}
+                      {% when 'image' %}
+                        {% if block.settings.size_chart_image %}
+                          <img
+                            src="{{ block.settings.size_chart_image | image_url }}"
+                            alt="{{ 'products.product.size_chart' | t }}"
+                            width="auto"
+                            height="auto"
+                            loading="lazy"
+                            class="img-responsive"
+                          >
+                        {% endif %}
+
+                      {% when 'html' %}
+                        {% if block.settings.size_chart_html %}
+                          {{ block.settings.size_chart_html }}
+                        {% endif %}
+
+                      {% when 'page' %}
+                        {% if block.settings.size_chart_page %}
+                          {{ block.settings.size_chart_page.content }}
+                        {% endif %}
+                    {% endcase %}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <style>
-            #modalSizeChart .modal-content {
-              /* Your custom modal styles here, if needed */
-            }
-    
-            #modalSizeChart .size-chart-table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-    
-            #modalSizeChart .size-chart-table th,
-            #modalSizeChart .size-chart-table td {
-              border: 1px solid #ddd;
-              padding: 8px;
-              text-align: center;
-            }
-    
-            #modalSizeChart .size-chart-table th {
-              background-color: #f8f9fa;
-            }
-          </style>
-          <script>
-            document.addEventListener('DOMContentLoaded', function () {
-              var modal = document.getElementById('modalSizeChart');
-    
-              modal.addEventListener('show.bs.modal', function () {
-                document.body.appendChild(modal);
+            <style>
+              #modalSizeChart .modal-content {
+                /* Your custom modal styles here, if needed */
+              }
+
+              #modalSizeChart .size-chart-table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+
+              #modalSizeChart .size-chart-table th,
+              #modalSizeChart .size-chart-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: center;
+              }
+
+              #modalSizeChart .size-chart-table th {
+                background-color: #f8f9fa;
+              }
+            </style>
+            <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                var modal = document.getElementById('modalSizeChart');
+
+                modal.addEventListener('show.bs.modal', function () {
+                  document.body.appendChild(modal);
+                });
               });
-            });
-          </script>
-        </div>
-      {% endif %}
-    </div>
+            </script>
+          </div>
+        {% endif %}
+      </div>
     {%- elsif block.type == 'form-buy' -%}
       <div id="product" class="mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
         <div class="form-group">
@@ -419,43 +419,43 @@
       ></script>
 
     {%- elsif block.type == 'collapse_block' %}
-    <div class="product-collapse-panel mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
-      <!-- Trigger/button for the collapse -->
-      <div class="product-collapse-header" data-toggle="collapse" data-target="#collapse-{{ forloop.index }}">
-        {% if block.settings.collapse_show_title %}
-          <h3 class="col-xs-12">
-            {{ block.settings.collapse_title }}
-            <span class="collapse-indicator pull-right">
-              {%- if block.settings.collapse_open %}-{% else %}+{% endif -%}
-            </span>
-          </h3>
-        {% endif %}
+      <div class="product-collapse-panel mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        <!-- Trigger/button for the collapse -->
+        <div class="product-collapse-header" data-toggle="collapse" data-target="#collapse-{{ forloop.index }}">
+          {% if block.settings.collapse_show_title %}
+            <h3 class="col-xs-12">
+              {{ block.settings.collapse_title }}
+              <span class="collapse-indicator pull-right">
+                {%- if block.settings.collapse_open %}-{% else %}+{% endif -%}
+              </span>
+            </h3>
+          {% endif %}
+        </div>
+        <!-- The actual content to be collapsed/expanded -->
+        <div
+          class="collapse product-collapse-content col-xs-12 {% if block.settings.collapse_open %}in{% endif %}"
+          id="collapse-{{ forloop.index }}"
+        >
+          {% if block.settings.collapse_type == 'description' %}
+            {{
+              product.content
+              | split: '[summary]'
+              | first
+              | split: '[video]'
+              | first
+              | split: '[tab]'
+              | first
+              | split: '[deal]'
+              | first
+              | split: '[affiliate]'
+              | first
+            }}
+          {% else %}
+            {{ block.settings.collapse_content }}
+          {% endif %}
+        </div>
       </div>
-      <!-- The actual content to be collapsed/expanded -->
-      <div
-        class="collapse product-collapse-content col-xs-12 {% if block.settings.collapse_open %}in{% endif %}"
-        id="collapse-{{ forloop.index }}"
-      >
-        {% if block.settings.collapse_type == 'description' %}
-          {{
-            product.content
-            | split: '[summary]'
-            | first
-            | split: '[video]'
-            | first
-            | split: '[tab]'
-            | first
-            | split: '[deal]'
-            | first
-            | split: '[affiliate]'
-            | first
-          }}
-        {% else %}
-          {{ block.settings.collapse_content }}
-        {% endif %}
-      </div>
-    </div>
-    
+
     {%- elsif block.type == 'divider' -%}
       <hr class="mt{{ block.settings.mt }} mb{{ block.settings.mb }}" {{ block.shopify_attributes }}>
     {% elsif block.type == '@app' %}

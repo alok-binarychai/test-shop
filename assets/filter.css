@@ -23,7 +23,7 @@
   margin-bottom: 22px;
   /* overflow: hidden; */
 }
-.filter-attribute-container label {font-family:  "Open Sans", sans-serif ; display: block;margin-bottom: 17px;font-size: 22px;color: #ffffff;font-weight: 500;text-transform: capitalize;}
+.filter-attribute-container label {font-family:  "Open Sans", sans-serif ; display: block;margin-bottom: 17px;font-size: 18px;color: #ffffff;font-weight: 500;text-transform: capitalize;}
 .filter-attribute-container:last-child { margin-bottom:0; }
 .filter-attribute-container .remove-filter {color: red;position: absolute;right: 0;top: 50%;margin-top: -10px;font-size: 0;width: 20px;height: 20px;text-align: center;padding: 0;border: 0;}
 .filter-attribute-container .remove-filter i {line-height: inherit;}
@@ -38,7 +38,7 @@
 .list-group .filter-attribute-container a.add-filter,
 .list-group .filter-attribute-container .checkbox_item.add-filter, 
 .list-group .filter-attribute-container .checkbox_item.add-filter label {
-  border: 0;display: block;line-height: 30px;padding: 5px 0;font-size: 14px;color: #838896;text-transform: capitalize;}
+  border: 0;display: block;line-height: 30px;padding: 5px 0;font-size: 14px;color: #ffffff;text-transform: capitalize;}
   .list-group .filter-attribute-container li.d-inline .checkbox_item.add-filter {
     display: inline;
   }
@@ -291,7 +291,7 @@ border-radius: 50%;
   align-items: center;
   display: inline-flex;
   justify-content: center;
-  background-color: #838896;
+  background-color: #ffffff;
 }
 .top_popular_tags .tag_item:hover {
   color: #ffffff;

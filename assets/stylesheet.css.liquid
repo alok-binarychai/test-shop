@@ -3371,7 +3371,7 @@ footer h4 {
   color: {{ footer_color_heading }};
 }
 .col1 .footer-title {
-  display: none;
+  /* display: none; */
 }
 .footer-content {
   line-height: 24px;
@@ -3722,7 +3722,7 @@ footer .list-unstyled.text-content li a{
   padding: 0 15px;
   height: 35px;
   font-size: 13px;
-  color: {{ sub_headings_color }};
+  color: #000;
   border-radius: 25px;
   display: inline-block;
   vertical-align: top;
@@ -5069,9 +5069,18 @@ background: url({{ 'icon-btn-cart-hover.png' | asset_url }}) center no-repeat;
 }
 
 .product-thumb .caption .product-name a {
-  color:#5a6069;;
+  color:#fff;
 }
 
 .cart .wrapper{
   background-color:#fff;
+}
+.shopify-challenge__button{
+  color:#000 !important;
+}
+.shopify-challenge__button:hover{
+  color:#fff !important;
+}
+#product-category .col-xs-12.product-item .product-name a{
+  color: #000;
 }

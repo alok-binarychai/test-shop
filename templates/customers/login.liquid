@@ -1,3 +1,21 @@
+<style>
+  .well{
+    min-height: 366px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .well #button-account{
+    width: 135px;
+    margin-bottom: 13px;
+  }
+  .sub-c{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+</style>
+
 <!--My Account Content Area Start-->
 <div class="container">
   <div class="row">
@@ -42,7 +60,7 @@
               <a rel="nofollow" href="#" onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
             </div>
             {% endif %}
-            <p class="submit">			
+            <p class="submit sub-c">			
               <input type="submit" value="{{ 'customer.login.sign_in' | t }}" class="btn btn-primary" />
               {{ 'customer.login.or' | t }} <a class="btn-acct" href="{{ shop.url }}">{{ 'customer.login.cancel' | t }}</a>
             </p>

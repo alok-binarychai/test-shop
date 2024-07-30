@@ -1,9 +1,19 @@
 <style>
   .pull-right .btn{
     color:#000; 
-  
-   .buttons  .btn {
-     color:#000 !important; 
+
+  }
+    .address-cancel{
+      color: #000 !important; 
+    }
+    .address-cancel:hover{
+      color: #fff !important;
+    }
+  .clearfix .btn {
+    color: #000 !important; 
+  }
+  .clearfix .btn:hover {
+    color: #fff !important; 
   }
 </style>
 
@@ -220,7 +230,7 @@
                   <div class="col-sm-4 col-sm-offset-2">
                     <div class="buttons clearfix"  style="margin-top:15px;">
                       <input type="submit" class="btn btn-primary" value="{{ 'customer.addresses.update' | t }}">
-                      or <a href="#" class="btn btn-default" onclick="Shopify.CustomerAddress.toggleForm({{ form.id }}); return false;">{{ 'customer.addresses.cancel' | t }}</a>
+                      or <a href="#" class="btn btn-default address-cancel" onclick="Shopify.CustomerAddress.toggleForm({{ form.id }}); return false;">{{ 'customer.addresses.cancel' | t }}</a>
 
                     </div>
                   </div>
