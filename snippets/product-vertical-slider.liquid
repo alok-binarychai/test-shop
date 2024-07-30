@@ -1,0 +1,51 @@
+<input type="hidden" id="check-use-zoom" value="1">
+<input type="hidden" id="light-box-position" value="1">
+<input type="hidden" id="product-identify" value="{{ product.id }}">
+<div class="lightbox-container"></div>
+{% assign featured_img_src = current_variant.featured_image.src | default: product.featured_image.src %}
+{% assign featured_img_alt = current_variant.featured_image.alt | default: product.featured_image.alt %}
+{% assign product_img_height = product_img_size | split: 'x' | first %}
+{% assign product_img_width = product_img_size | split: 'x' | last %}
+{% if thumb == 'left' %}
+  <div class="col-md-1 hidden-sm hidden-xs p-sticky">
+    <div class="thumbnails-additional bxslider" id="gallery_01">
+      {% render 'product-slider-media-thumbs', product: product %}
+    </div>
+  </div>
+{% endif %}
+<div class="col-md-6 col-sm-6 block-1 owl-style2 p-sticky">
+  <div class="product-zoom-image">
+    <a
+      href="{{ featured_img_src | image_url }}"
+      class="cloud-zoom main-image"
+      id="product-cloud-zoom"
+      style="width: {{ product_img_size | split:'x' | first }}px; height: {{ product_img_size | split:'x' | last }}px;"
+      rel="tint:'{{color_skin}}',tintOpacity:0.5,showTitle: false ,zoomWidth:{{ product_img_size | split:'x' | first }},zoomHeight:{{ product_img_size | split:'x' | last }},adjustX: 0,position:'inside' "
+    >
+      <img
+        {% if settings.lazyloading_enable %}
+          class="lazyload" data-src="{{ featured_img_src | image_url: width: product_img_width, height: product_img_height, crop: 'center' }}"
+        {% endif -%}
+        src="{{ featured_img_src | image_url: width: product_img_width, height: product_img_height, crop: 'center' }}"
+        width="{{ product_img_width }}"
+        height="{{ product_img_height }}"
+        title="{{ featured_img_alt }}"
+        alt="{{ featured_img_alt }}"
+      >
+    </a>
+  </div>
+  <div class="additional-images owl-carousel owl-theme visible-sm visible-xs">
+    {% render 'product-slider-media-thumbs', product: product %}
+  </div>
+  <!-- end wrapper-img-additional -->
+</div>
+{% if thumb == 'right' %}
+  <div class="col-md-1 hidden-sm hidden-xs p-sticky">
+    <div class="thumbnails-additional bxslider" id="gallery_01">
+      {% render 'product-slider-media-thumbs', product: product %}
+    </div>
+  </div>
+{% endif %}
+<div class="col-md-5 col-sm-6 ver product-info-main p-sticky">
+  {% include 'product-page-features' %}
+</div>

@@ -1,0 +1,101 @@
+<style>
+  .ac-contact .header-top {
+    background-image: url(https://cdn.shopify.com/s/files/1/0754/9268/8152/files/contact_us.png?v=1715149850) !important;
+}
+</style>
+
+
+
+<!-- Contact Us Area Start -->
+{% include section.settings.page_layout %}
+<!-- End of Contact Us Area -->
+{% schema %}
+{
+  "name": "Contact Us Page",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Video Guide](https://youtu.be/35FFlajP5H4?list=PLvJCnPMUAdwr6XxWVo_f9dkVRh8GNCXoa)"
+    },
+    {
+      "type": "select",
+      "id": "page_layout",
+      "label": "Page layout",
+      "options": [
+        {
+          "value": "contact-layout1",
+          "label": "Layout 1"
+        },
+        {
+          "value": "contact-layout2",
+          "label": "Layout 2"
+        }
+      ],
+      "default": "contact-layout1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_map",
+      "label": "Show map",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title_address",
+      "label": "Address Title",
+      "default": "Contact Information"
+    },
+    {
+      "type": "richtext",
+      "id": "address",
+      "label": "Address",
+      "default": "<p><strong>Address:</strong> 1234 Street Name, City, Country</p><p><strong>Phone:</strong> (123) 456-7890</p><p><strong>Email:</strong> email@example.com</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "map_code",
+      "label": "Map code snippet",
+      "info": "Go to [Google Maps](https:\/\/google.com\/maps) for generating code"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content",
+      "label": "Show page content",
+      "info": "Text added in page created from admin",
+      "default": false
+    },
+    {
+      "type": "paragraph",
+      "content": "Below options are to add accept option to make it GDPR complaint"
+    },
+    {
+      "type": "checkbox",
+      "id": "accept_check_enable",
+      "label": "Enable Accept check",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "accept_text",
+      "label": "Accept Text",
+      "default": "I agree with the terms and conditions."
+    }
+  ],
+  "blocks": [],
+  "presets": []
+}
+{% endschema %}
+{% if section.settings.accept_check_enable %}
+  <script>
+    $(document).ready(function () {
+      $('body').on('click', '[name="submitMessage"]', function () {
+        if ($('#contact_accept_agree').is(':checked')) {
+          $(this).submit();
+        } else {
+          alert("{{ 'cart.general.terms_c_agree' | t }}");
+          return false;
+        }
+      });
+    });
+  </script>
+{% endif %}

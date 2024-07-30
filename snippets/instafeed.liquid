@@ -1,0 +1,28 @@
+<div id="instagram_block_home" class="block instagram-container">
+  <div class="module-title">
+    {% if section.settings.insta_title != blank%}
+    <h2>{{ section.settings.insta_title }}</h2>
+    {% endif %}
+    {% if section.settings.description != blank %}  
+    <div class="module-description">
+      <p>{{ section.settings.description }}</p>
+    </div>
+    {% endif %}
+  </div>
+  <div class="content_block owl-carousel owl-theme" id="instafeed">
+    {% if section.settings.fetch_mode == 'manual' and section.blocks.size > 0 %}
+    {% for block in section.blocks %}
+    {% if block.settings.link != blank %}          
+    <a target='_blank' href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+      {% endif %}
+      {% if block.settings.image != blank %}
+      <img src="{{ block.settings.image | img_url: 'master' }}" alt="" class="fancybox img-responsive {% if settings.lazyloading_enable %}lazyload{% endif %}" />
+      {% endif %}
+      {% if block.settings.link != blank %}          
+    </a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>
+

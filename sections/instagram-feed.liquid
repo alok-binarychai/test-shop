@@ -1,0 +1,206 @@
+<div class="main-row row-{{section.id}} {% if section.settings.fullwidth == true %}full-width{% endif  %} " data-section-id="{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="main-col col-sm-12 col-md-12">
+        <div class="row sub-row">
+          <div class="sub-col col-sm-12 col-md-12">
+            {% include section.settings.layout %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  {% if section.settings.fetch_mode == 'insta' %}
+  $(window).load(function () {
+    fetch(`https://d3ejra0xbg20rg.cloudfront.net/instagram/media?shop=${Shopify.shop}&resource=default`).then((response) => { 
+      response.json().then((media) => { 
+        // media is a json containing the data about the 18 latest media. 
+        //console.log(media);
+        var feed;
+        $.each( media, function( i, item ) {
+          var feed = "<a target='_blank' href='" + item.permalink +"'><img src='"+ item.media_url +"' class='fancybox img-responsive {% if settings.lazyloading_enable %}lazyload{% endif %}'></a>";
+          $("#instafeed").append(feed);
+
+          if ( i === {{ section.settings.insta_images_fetch }} ) {
+              return false;
+              }
+              });
+
+        }); 
+      }).then((feed) => {
+        setTimeout(function () {
+          $("#instagram_block_home .content_block").owlCarousel({
+            autoPlay: false,
+            items: 6,
+            loop: true,
+            navSpeed: 1000,
+            dotsSpeed: 1000,
+            autoplaySpeed: 1000,
+            nav: true,
+            dots: false,
+            navText: ['<i class="ion-chevron-left"></i>', '<i class="ion-chevron-right"></i>'],
+            responsive: {
+              0: {
+                items: 1,
+                nav: true
+              },
+              480: {
+                items: 1,
+                nav: true
+              },
+              640: {
+                items: 2,
+                nav: true
+              },
+              991: {
+                items: 3
+              },
+              1200: {
+                items: {{ section.settings.no_of_products }}
+              }
+              }
+            });
+          }, 50);
+        }).catch(function(error) {
+          console.log('Request failed', error);
+        });
+      });
+      {% else %}
+      $(document).ready(function() {
+      $("#instagram_block_home .content_block").owlCarousel({
+        autoPlay: false,
+        items: 6,
+        loop: true,
+        navSpeed: 1000,
+        dotsSpeed: 1000,
+        autoplaySpeed: 1000,
+        nav: true,
+        dots: false,
+        navText: ['<i class="ion-chevron-left"></i>', '<i class="ion-chevron-right"></i>'],
+        responsive: {
+          0: {
+            items: 1,
+            nav: true
+          },
+          480: {
+            items: 1,
+            nav: true
+          },
+          640: {
+            items: 2,
+            nav: true
+          },
+          991: {
+            items: 3
+          },
+          1200: {
+            items: {{ section.settings.no_of_products }}
+          }
+          }
+        });
+      });
+        {% endif %}
+</script>
+<style>
+  .row-{{section.id}} .instagram_gallery a {
+    width: 100% !important;
+  }
+</style>
+{% schema %}
+{
+  "name": "Instafeed section",
+  "class": "insta-section index-section--flush",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "In order to use this section, you need to install free app [Section Feed](https:\/\/apps.shopify.com\/section-feed-by-maestrooo) . Once done just add the section and it will be start showing automatically"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Select layout design",
+      "options": [
+        {
+        "value": "instafeed",
+        "label": "Design 1"
+        },
+		{
+        "value": "instafeed-2",
+        "label": "Design 2 (Light layout)"
+        }
+      ],
+      "default": "instafeed"
+    },
+	{
+      "type": "select",
+      "id": "fetch_mode",
+      "label": "Select Fetch Mode",
+      "options": [
+        {
+        "value": "insta",
+        "label": "From Insta using Maestroo App"
+        },
+        {
+        "value": "manual",
+        "label": "Manually Add Block Images"
+      	}
+      ],
+	  "default": "insta"
+    },
+    {
+      "type": "text",
+      "id": "insta_title",
+      "label": "Title",
+      "default": "#Aero ON INSTAGRAM"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "How us how you are styling your Rare pieces on Instagram with the hashtag #Aero."
+    },
+    {
+      "type": "text",
+      "id": "insta_images_fetch",
+      "label": "No of images to fetch",
+      "default": "6"
+    },
+    {
+      "type": "text",
+      "id": "no_of_products",
+      "label": "No of products in a row",
+      "default": "5"
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Set Div fullwidth?",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Instagram Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Insta Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Insta Image Link URL"
+		}
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Instagram Feed",
+    "category": "Feature Sections"
+  }]
+}
+{% endschema %}

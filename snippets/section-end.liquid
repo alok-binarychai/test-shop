@@ -1,0 +1,21 @@
+</div> 
+</div>
+</div> 
+{% if section.settings.background != 'none' %}
+  <style>
+        {% if section.settings.bg_image != blank and section.settings.background == 'image' %}
+        #shopify-section-{{ section.id }} .layer-background {
+          background-position: center;
+          background-image: url('{{ section.settings.bg_image | image_url }}');
+            }
+        {% elsif section.settings.background_gradient != blank and section.settings.background == 'gradient' -%}
+        #shopify-section-{{ section.id }} .layer-background {
+          background: {{ section.settings.background_gradient }} !important;
+        }
+        {% elsif section.settings.background_color != settings.section_bg_color and section.settings.background == 'color' -%}
+        #shopify-section-{{ section.id }} .layer-background {
+          background: {{ section.settings.background_color }} !important;
+        }
+        {%- endif %}
+</style>
+{%- endif %}

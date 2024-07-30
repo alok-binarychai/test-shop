@@ -1,0 +1,57 @@
+{% include 'product-grid-variables' %}
+{% assign img_size = '265x265' %}
+<div class="product-layout list-style">
+  <div class="product-thumb transition">
+    <div class="item">
+      <div class="item-inner">
+        <div class="image images-container">
+          {% include 'product_label' %}
+          {% if section.settings.product_grid_img_carousel == true %}
+          {% include 'product-grid-image-carousel'%}
+          {% else %}
+          <a href="{{ product.url }}" class="product-image">
+            {% include 'product-grid-image',image:product.featured_image %}
+            {% if settings.hide_hover != true %}
+            {% include 'product-grid-image',image:product.images.last,hover:true %}
+            {% endif %}
+            {% if settings.grid_color_swatches != 'false' and section.settings.product_grid_img_carousel == false %}
+            {% if product.available and product.variants.size > 1 %}
+            {% include 'swatch-grid-img' with 'Color'  %}
+            {% endif %}
+            {% endif %}
+          </a>
+          {% endif %}
+        </div>
+        <!-- image -->
+        <div class="caption">
+          {% if settings.grid_vendor_enable %}
+          <p class="manufacture-product">
+            <span>{{ 'products.product.brand' | t }}: </span>{{ product.vendor | link_to_vendor }}
+          </p>
+          {% endif %}
+          {% include 'review' %}
+          {% if settings.grid_color_swatches != 'false' and section.settings.product_grid_img_carousel == false %}
+          {% if product.available and product.variants.size > 1 %}
+          {% include 'swatch-grid' with 'Color' %}
+          {% endif %}
+          {% endif %}
+          <h4 class="product-name">
+            <a href="{{ product.url | within: collection }}">
+              {% if settings.limit_title_words == true %}{{ product.title | truncate:settings.limit_title_words_count, "" }}{% else %}{{ product.title }}{% endif %}
+            </a>
+          </h4>
+          <div class="product-des">{{ product.content | strip_html | truncatewords: 30 }}</div>
+          {% if on_sale %}
+          <p class="rate-special">
+            -{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round}}%
+          </p>
+          {% endif %}
+          {% include 'price'%}
+        </div>
+        <!-- caption -->
+      </div>
+    </div>
+  </div>
+  <!-- product-thumb -->
+</div>
+<!-- product-layout -->

@@ -1,0 +1,67 @@
+<div class="testimonial-container" {% if section.settings.image != blank %}style="background-image: url('{{ section.settings.image | img_url: 'master' }}');" {% endif %}>
+  <div class="container">
+    {% if section.settings.heading != blank %}
+    <div class="module-title">
+      {% if section.settings.description != blank %}
+      <p class="sub-title">{{ section.settings.description }}</p>
+      {% endif %}
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    {% endif %}
+    <div class="block-content">
+      <div id="slides" class="owl-carousel owl-theme {{ section.id }}">
+        {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+        <div class="row_items">
+          <div class="testimonial-content">
+            <div class="testimonial-images">
+              {% if block.settings.image != blank %}
+              <img class="" src="{{ block.settings.image | img_url: '64x64' }}" alt="{{ block.settings.author }}"/>
+              {% endif %}
+            </div>
+            <div class="testimonial-box">
+              <a href="#">{{ block.settings.description }}</a>
+            </div>
+            <h4 class="testimonial-author">{{ block.settings.author }}</h4>
+          </div>
+          <!--testimonial-content-->
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    <!--block-content-->
+  </div>
+</div>
+<!--testimonial-container-->
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#slides.{{ section.id }}").owlCarousel({
+      autoplay :  1 ,
+      items : 1,	
+      loop: true,
+      margin: 30,
+      navSpeed : 1000,
+      dotsSpeed : 1000,
+      autoplaySpeed : 1000,
+      nav :  false ,
+      dots : true ,
+      lazyLoad: true,
+      navText : ['<i class="ion-ios-arrow-left"></i>','<i class="ion-ios-arrow-right"></i>'],
+      responsive:{
+      0:{
+      items: 1
+      },
+      480:{
+      items: 1
+      },
+      768:{
+      items: 1
+      },
+      980:{
+      items: 1
+      }
+      }
+      });
+  });
+</script>

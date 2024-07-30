@@ -1,0 +1,85 @@
+<div id="blog_home" class="menu-recent {% if section.settings.bottom_padding %} padding-bottom{% endif %}{% if section.settings.bottom_border %} border-bottom{% endif %}">
+  <div class="">
+    <div class="blog-title module-title">
+      <h2><span>{{ section.settings.heading }}</span></h2>
+    </div>
+    {% if section.settings.description != blank %}
+    <div class="module-description">
+      <p>{{ section.settings.description }}</p>
+    </div>
+    {% endif %}
+    <div class="articles-container owl-carousel owl-theme">
+      {% for article in blogs[section.settings.blog].articles %}
+      <div class="row_items">
+        <div class="articles-inner item-inner">
+          <div class="articles-image alt">
+            <a class="" href="{{ article.url }}">
+              <img {% if settings.lazyloading_enable %} class="lazyload" data-{% endif %}src="{{ article.image.src | img_url: 'master' }}" alt="{{ article.title }}">
+            </a>
+          </div>
+          <div class="aritcles-content alt text-{{ section.settings.text_align }}">
+            <div class="articles-date">
+              <time datetime="{{ article.published_at | date }}">
+                {{ article.published_at | date: ' <span>%d</span>/%b' }}
+              </time>
+            </div>
+            <a class="articles-name" href="{{ article.url }}">{{ article.title }}</a> 
+            <p class="author">
+              {{ 'blogs.article.by' | t }}: 
+              <span>{{ article.author }}</span>
+            </p>
+            {% if section.settings.show_summary %}
+            <div class="articles-intro">
+              <p>
+                {% if article.excerpt.size > 0 %}
+                {{ article.excerpt | truncatewords: 15}}
+                {% else %}
+                {{ article.content | strip_html | truncatewords: 15 }}
+                {% endif %}
+              </p>
+            </div>
+            {% endif %}
+            <a class="read-more" href="{{ article.url }}">{{ 'blogs.article.readmore' | t }}</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".articles-container").owlCarousel({
+      autoPlay :  false ,
+      items : {{ section.settings.items }},
+      margin: 30,
+      loop: false,			
+      navSpeed : 1000,
+      dotsSpeed : 1000,
+      autoplaySpeed : 1000,
+      nav :  false ,
+      dots :  false ,
+      navText : ['<i class="ion-chevron-left"></i>','<i class="ion-chevron-right"></i>'],
+      responsive:{
+        0:{
+          items: 1,
+          nav:false
+        },
+        480:{
+          items: 1,
+          nav: false
+        },
+        768:{
+          items: 1
+        },
+        992:{
+          items: 2
+        },
+        1200:{
+          items: {{ section.settings.items }}
+        }
+      }
+    });
+  });
+</script>
+

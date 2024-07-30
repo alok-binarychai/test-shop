@@ -1,0 +1,103 @@
+{% include 'product-grid-variables' %}
+<div class="pt_menu nav-{{forloop.index}} pt_menu_had_child {% if link.active %} act{% endif %}">
+  <div class="parentMenu">
+    <a href="{{link.url}}">
+      <span>{{link.title}}</span>
+    </a>
+  </div>
+  <div id="popup{{forloop.index}}" class="popup" style="display: none; width: 1228px;">
+    <div class="inner-popup">
+      <div class="block1" id="block{{forloop.index}}">
+
+        {% assign cols = 0 %}
+        {% for i in (1..4) %}
+        {% capture handle %}mega_menu_col_{{ i }}{% endcapture %}
+        {% if block.settings[handle] != 'none' %}
+        {% assign cols = cols | plus:1 %}
+        {% endif %}
+        {% endfor %}
+
+        {% for i in (1..4) %}
+        {% capture handle %}mega_menu_col_{{ i }}{% endcapture %}
+
+        {% case block.settings[handle] %}
+
+        {% when 'menu' %}
+
+        {% capture menu_width %}mega_menu_width_col_{{ i }}{% endcapture %}
+        {% capture menu_title %}mega_menu_title_col_{{ i }}{% endcapture %}
+        {% capture menu_link %}mega_menu_link_col_{{ i }}{% endcapture %}
+        {% capture menu %}mega_menu_ll_col_{{ i }}{% endcapture %}
+        <div class="column {% if forloop.first %} first {% endif %}{% if forloop.last %} last {% endif %} col{{ forloop.index}}">
+          <div class="itemMenu level1">
+            <a class="itemMenuName level1 actParent" href="{{ block.settings[menu_link] }}">
+              <span>{{ block.settings[menu_title] }}</span>
+            </a>
+            <div class="itemSubMenu level0">
+              <div class="itemMenu level0">
+                {% for link in linklists[block.settings[menu]].links limit:block.settings.menu_items_count%}
+                <a class="itemMenuName level0 act" href="{{link.url}}"><span>{{link.title}}</span></a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% when 'collection' %}
+        {% capture menu_collection %}mega_menu_collection_col_{{ i }}{% endcapture %}
+        <div class="column {% if forloop.first %} first {% endif %}{% if forloop.last %} last {% endif %} col{{ forloop.index}}">
+          <div class="itemMenu level1">
+            <a class="itemMenuName level1 actParent" href="{{ collections[block.settings[menu_collection]].url }}">
+              <span>{{ collections[block.settings[menu_collection]].title }}</span>
+            </a>
+            <div class="itemSubMenu level0">
+              <div class="itemMenu level0">
+                {% for product in collections[block.settings[menu_collection]].products limit:block.settings.menu_items_count %}
+                <a class="itemMenuName level0 act" href="{{ product.url | within: collection }}"><span>{{ product.title }}</span></a>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% when 'product' %}
+        {% capture menu_product %}mega_menu_product_col_{{ i }}{% endcapture %}
+        {% assign product = all_products[block.settings[menu_product]] %}
+        {% assign img_size = settings.img_size_grid %}
+        <div class="column {% if forloop.first %} first {% endif %}{% if forloop.last %} last {% endif %} col{{ forloop.index}}">
+          <div class="itemMenu level1">
+            <div class="itemSubMenu level0">
+              <div class="itemMenu level0 sub-product">
+                <a href="{{ product.url }}">
+                  {% include 'product-grid-image',image:product.featured_image, customclass:'mega-product-image' %}
+                </a>
+              </div>
+            </div>
+            <a class="itemMenuName level1 actParent sub-product-title" href="{{ product.url }}">
+              <span>{{ product.title }}</span>
+            </a>
+            {% include 'price'%}
+          </div>
+        </div>
+        {% when 'image' %}
+        {% capture menu_title %}mega_menu_title_col_{{ i }}{% endcapture %}
+        {% capture menu_image %}mega_menu_image_col_{{ i }}{% endcapture %}
+        {% capture menu_image_link %}mega_menu_image_link_col_{{ i }}{% endcapture %}
+        <div class="column {% if forloop.first %} first {% endif %}{% if forloop.last %} last {% endif %} col{{ forloop.index}}">
+          <div class="itemMenu level1">
+            <a class="itemMenuName level1 actParent banner-static" href="{{ block.settings[menu_image_link] }}">
+              {% include 'product-grid-image',image:block.settings[menu_image] %}
+            </a>
+          </div>
+        </div>
+        {% else %}
+
+        {% endcase %}
+        {% endfor %}
+        <div class="clearBoth"></div>
+      </div>
+      <!-- 
+<div class="block2" id="block225">
+<a href="#"><img src="image/catalog/cmsblock/image-bottom-menu.jpg" alt="Bottom  Image Item Menu"></a> 									
+</div>-->
+    </div>
+  </div>
+</div>

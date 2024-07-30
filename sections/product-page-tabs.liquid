@@ -1,0 +1,424 @@
+<!-- Product Details Area Start -->
+{% render 'section-start', fluid: false, id: 'product-product-tabs' %}
+<div class="block-3 col-sm-12 product-info-detailed">
+  {% if section.settings.product_description_layout == 'tab' %}
+    {% if section.settings.show_description_tab %}
+      <ul
+        class="nav nav-tabs"
+        role="tablist"
+      >
+        <li role="presentation" aria-current="page" class="active">
+          <a
+            href="#description"
+            id="description-tab"
+            data-toggle="tab"
+            data-target="#description"
+            role="tab"
+            aria-controls="description"
+            aria-selected="true"
+          >
+            {{- 'products.product.description' | t -}}
+          </a>
+        </li>
+        {% if section.settings.show_reviews_tab %}
+          <li role="presentation" class="reviews">
+            <a
+              href="#reviews"
+              data-toggle="tab"
+              data-target="#reviews"
+              role="tab"
+              aria-controls="reviews"
+              aria-selected="false"
+            >
+              {{- 'products.product.reviews' | t -}}
+            </a>
+          </li>
+        {% endif %}
+        {% if section.settings.show_third_tab %}
+          <li role="presentation" class=" ">
+            <a
+              href="#data"
+              data-toggle="tab"
+              data-target="#data"
+              role="tab"
+              aria-controls="data"
+              aria-selected="false"
+            >
+              {{- section.settings.third_tab_title -}}
+            </a>
+          </li>
+        {% endif %}
+        {% if section.settings.show_fourth_tab %}
+          <li role="presentation" class=" ">
+            <a
+              href="#data2"
+              data-toggle="tab"
+              data-target="#data2"
+              role="tab"
+              aria-controls="data2"
+              aria-selected="false"
+            >
+              {{- section.settings.fourth_tab_title -}}
+            </a>
+          </li>
+        {% endif %}
+        {% if section.settings.show_tags_tab %}
+          <li role="presentation" class=" ">
+            <a
+              href="#tags"
+              id="tags-tab"
+              data-toggle="tab"
+              data-target="#tags"
+              role="tab"
+              aria-controls="tags"
+              aria-selected="false"
+            >
+              {{ 'products.product.tags' | t }}
+            </a>
+          </li>
+        {% endif %}
+        {% if product.description contains '[tab]' %}
+          <li role="presentation" class=" ">
+            <a
+              href="#tab"
+              data-toggle="tab"
+              data-target="#tab"
+              role="tab"
+              aria-controls="tab"
+              aria-selected="false"
+            >
+              {{- section.settings.custom_tab_title -}}
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  {% endif %}
+  {% if section.settings.show_description_tab %}
+    <div class="tab-content">
+      <div
+        class="mobtab"
+        role="presentation"
+      >
+        <a
+          href="#description"
+          class="active"
+          role="tab" data-toggle="tab"
+          aria-controls="description"
+          aria-selected="true"
+        >
+          {{- 'products.product.description' | t -}}
+        </a>
+      </div>
+      <div
+        role="tabpanel"
+        class="tab-pane fade active in"
+        id="description"
+        aria-labelledby="description-tab"
+        tabindex="0"
+      >
+        <p>
+          {% comment %} {{ product.description | split:"[video]" | first | strip_html }} {% endcomment %}
+          {{
+            product.description
+            | split: '[summary]'
+            | first
+            | split: '[video]'
+            | first
+            | split: '[tab]'
+            | first
+            | split: '[deal]'
+            | first
+            | split: '[affiliate]'
+            | first
+          }}
+        </p>
+      </div>
+      {% if section.settings.show_reviews_tab %}
+        <div
+          class="mobtab"
+          role="presentation"
+        >
+          <a
+            href="#reviews"
+             data-toggle="tab"
+            role="tab"
+            aria-controls="reviews"
+            aria-selected="false"
+          >
+            {{- 'products.product.reviews' | t -}}
+          </a>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="reviews" aria-labelledby="reviews-tab" tabindex="0">
+          <p>
+            {% render 'product-review' %}
+          </p>
+        </div>
+      {% endif %}
+      {% if section.settings.show_third_tab %}
+        <div
+          class="mobtab"
+          role="presentation"
+        >
+          <a
+            href="#data"
+            data-toggle="tab"
+            role="tab"
+            aria-controls="data"
+            aria-selected="false"
+          >
+            {{- section.settings.third_tab_title -}}
+          </a>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="data" aria-labelledby="data-tab" tabindex="0">
+          {{ section.settings.third_tab_text }}
+        </div>
+      {% endif %}
+      {% if section.settings.show_fourth_tab %}
+        <div
+          class="mobtab"
+          role="presentation"
+        >
+          <a
+            href="#data2"
+             data-toggle="tab"
+            role="tab"
+            aria-controls="data2"
+            aria-selected="false"
+          >
+            {{- section.settings.fourth_tab_title -}}
+          </a>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="data2" aria-labelledby="data2-tab" tabindex="0">
+          {{ section.settings.fourth_tab_text }}
+        </div>
+      {% endif %}
+      {% if section.settings.show_tags_tab %}
+        <div
+          class="mobtab"
+          role="presentation"
+        >
+          <a
+            href="#tags"
+             data-toggle="tab"
+            role="tab"
+            aria-controls="tags"
+            aria-selected="false"
+          >
+            {{ 'products.product.tags' | t }}
+          </a>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="tags" aria-labelledby="tags-tab" tabindex="0">
+          <p class="tags">
+            <span>
+              {{- 'products.product.tags' | t }}:
+              {% for tag in product.tags %}
+                {% unless tag contains '_' %}
+                  <a href="/collections/all/{{ tag | handle }}">{{ tag }}</a>
+                  {% unless forloop.last %}, {% endunless %}
+                {% endunless %}
+              {% endfor %}
+            </span>
+          </p>
+        </div>
+      {% endif %}
+      {% if product.description contains '[tab]' %}
+        <div
+          class="mobtab"
+          role="presentation"
+        >
+          <a
+            href="#tab"
+             data-toggle="tab"
+            role="tab"
+            aria-controls="tab"
+            aria-selected="false"
+          >
+            {{- section.settings.custom_tab_title -}}
+          </a>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="tab" aria-labelledby="tab-tab" tabindex="0">
+          {{ product.description | split: '[tab]' | last | split: '[/tab]' | first }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% render 'section-end' %}
+
+<script>
+  {% comment %} document.addEventListener('DOMContentLoaded', function () {
+    var reviewsTimeout = setInterval(function () {
+      var caption = document.querySelectorAll('.product-info-main .spr-badge-caption');
+      if (caption.length > 0) {
+        caption[0].addEventListener('click', function () {
+          document.querySelector('#reviews').classList.add('active');
+          window.scrollTo({
+            top: document.querySelector('#reviews').offsetTop - 100,
+            behavior: 'smooth',
+          });
+          var tabs = document.querySelectorAll('.nav-tabs a[href="#reviews"]');
+          tabs[0].click();
+        });
+        clearInterval(reviewsTimeout);
+      }
+    }, 100);
+  }); {% endcomment %}
+  {% comment %} function toggleTabPane(element) {
+    // Find the associated .tab-pane element
+    var pane = element.nextElementSibling;
+
+    // Check if the pane is currently shown
+    if (pane.classList.contains('show')) {
+      // Hide the pane
+      pane.classList.remove('show', 'active');
+    } else {
+      // Show the pane with fade effect
+      pane.classList.add('active');
+      setTimeout(function () {
+        pane.classList.add('show');
+      }, 1); // A short delay ensures that the transition happens
+    }
+
+    // Toggle the active class for the link for styling purposes
+    var link = element.querySelector('.nav-link');
+    link.classList.toggle('active');
+  } {% endcomment %}
+</script>
+{% schema %}
+{
+  "name": "Product Page Tabs",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "[Video Guide for product page](https://youtu.be/Agbw0GrE48U?list=PLvJCnPMUAdwr6XxWVo_f9dkVRh8GNCXoa)"
+    },
+    {
+      "type": "select",
+      "id": "product_description_layout",
+      "label": "Area Layout",
+      "options": [
+        {
+          "value": "tab",
+          "label": "Tabs"
+        },
+        {
+          "value": "sequence",
+          "label": "Sequential"
+        }
+      ],
+      "info": "If you choose sequential, the tabs will be shown one after another. If you choose tabs, the tabs will be shown as tabs.",
+      "default": "tab"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description_tab",
+      "label": "Enable Description Tab",
+      "default": true,
+      "info": "If set to false, all the tabs will be hidden"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews_tab",
+      "label": "Enable Reviews Tab",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_third_tab",
+      "label": "Enable Additional Tab",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "third_tab_title",
+      "label": "Title for Additional Tab",
+      "info": "Tab 1",
+      "default": "Custom Tab"
+    },
+    {
+      "type": "richtext",
+      "id": "third_tab_text",
+      "label": "Content for Additional Tab",
+      "info": "Text can be formatted using basic HTML",
+      "default": "<p>Add text, HTML, images, and videos to this tab via product settings</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fourth_tab",
+      "label": "Enable Additional Tab 2",
+      "default": false
+    },
+    {
+      "type": "inline_richtext",
+      "id": "fourth_tab_title",
+      "label": "Title for Additional Tab 2",
+      "info": "Tab 2",
+      "default": "Custom Tab 2"
+    },
+    {
+      "type": "richtext",
+      "id": "fourth_tab_text",
+      "label": "Content for Additional Tab 2",
+      "info": "Text can be formatted using basic HTML",
+      "default": "<p>You can incorporate text, HTML, images, and videos into this tab using the product settings.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags_tab",
+      "label": "Enable Tags Tab",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "custom_tab_title",
+      "label": "Title for Custom Tab (if used)",
+      "default": "Additional Information"
+    },
+    {
+      "type": "checkbox",
+      "id": "top_margin",
+      "label": "Enable Top Margin?",
+      "info": "Include top margin space outside the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "top_padding",
+      "label": "Enable Top Padding?",
+      "info": "Insert a padding space at the beginning of the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_padding",
+      "label": "Enable Bottom Padding?",
+      "info": "Insert a padding space at the end of the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_margin",
+      "label": "Enable Bottom Margin?",
+      "info": "Include bottom margin space outside the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_border",
+      "label": "Display Bottom Border?",
+      "info": "Display a line at the bottom to denote section separation",
+      "default": false
+    }
+  ],
+  "blocks": [],
+  "presets": []
+}
+{% endschema %}
+<style>
+  {% if section.settings.product_description_layout == 'sequence' %}
+  .mobtab {
+    display: block;
+  }
+  {% endif %}
+</style>

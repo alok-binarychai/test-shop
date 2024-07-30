@@ -1,0 +1,174 @@
+<div class="main-row {% if section.settings.fullwidth == true %}full-width {% endif  %} {% if section.settings.background == true %} layer-background {% endif  %} {% if section.settings.top_margin %} margin-top{% endif %}" data-section-id="{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="main-col col-sm-12 col-md-12">
+        <div class="row sub-row">
+          <div class="sub-col col-sm-12 col-md-12">
+            <div class="static-welcome {% if section.settings.bottom_padding %} padding-bottom{% endif %} {% if section.settings.bottom_border %} border-bottom{% endif %}">
+              {% if section.settings.heading != blank %} 
+              <div class="title">
+                <h1>{{ section.settings.heading }}</h1>
+              </div>
+              {% endif %}
+              <div class="content">
+                {% if section.settings.image1 != blank %}
+                <div class="image">
+                  <a href="{{ section.settings.link }}" {{ section.shopify_attributes }}>
+                    <img src="{{ section.settings.image1 | img_url: 'master' }}" class="" alt=""/>
+                  </a>
+                </div>
+                    {% endif %}
+                <div class="text {% if section.settings.image1 == blank %}text1{% endif %}">
+                  {% if section.settings.description != blank %}
+                  {{ section.settings.description }}
+                  {% endif %}
+                  {% if section.settings.author == true %}
+                  <div class="author">
+                    <h4 class="name">{{ section.settings.author_name }}</h4>
+                    {% if section.settings.signature != blank %}
+                    <img class="signature" src="{{ section.settings.signature | img_url: 'master' }}" class="" alt=""/>
+                    {% endif %}
+                  </div>
+                  {% endif  %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  {%- if section.settings.align != 'left' %}
+  #shopify-section-{{section.id }} .static-welcome .content .text {
+    text-align: {{section.settings.align }};
+  }
+  {%- endif %}
+  {% if section.settings.background %}
+  {% if section.settings.bg-image != blank %}
+  #shopify-section-{{section.id }} .layer-background {
+    background-image: url('{{ section.settings.bg-image | img_url: 'master' }}');
+      }
+  {% else -%}
+  #shopify-section-{{section.id }} .layer-background {
+    background: {{ section.settings.background_color }};
+  }
+  {%- endif %}
+  {%- endif %}
+</style>
+{% schema %}
+{
+  "name": "Message Box",
+  "settings": [
+	{
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Main"
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Image",
+      "info": "ad image"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link URL"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Slide Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "author",
+      "label": "Add Author Info",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "author_name",
+      "label": "Name"
+    },
+	{
+      "type": "image_picker",
+      "id": "signature",
+      "label": "Signature",
+      "info": "189x82 image size"
+    },
+	{
+	    "type": "checkbox",
+    	"id": "fullwidth",
+    	"label": "Set Div fullwidth?",
+    	"default": false
+    },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Align",
+      "options": [
+        {
+        "value": "left",
+        "label": "left"
+        },
+        {
+        "value": "center",
+        "label": "center"
+        },
+        {
+        "value": "right",
+        "label": "right"
+        }
+      ],
+      "default": "left"	
+    },
+	{
+      "type": "checkbox",
+      "id": "background",
+      "label": "Add Background",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image",
+      "info": "1920 width recommended"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Sections Background Color",
+      "info": "This option allows you to set different background color than default one for the section.",
+      "default": "#181b23"
+    },
+    {
+      "type": "checkbox",
+      "id": "top_margin",
+      "label": "Add top margin?",
+      "info": "White empty space above section. Won't apply when full width option enabled.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_padding",
+      "label": "Add bottom margin?",
+      "info": "White empty space below section. Won't apply when full width option enabled.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_border",
+      "label": "Add bottom border?",
+      "info": "Border line below section",
+      "default": false
+    }
+  ],
+  "presets": [{
+    "name": "Message Box",
+    "category": "Feature Sections"
+  }]
+}
+{% endschema %}

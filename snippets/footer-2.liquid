@@ -1,0 +1,166 @@
+{% if template == 'index' %}
+{% for block in section.blocks %}
+{% if block.type == 'newsletter' %}
+<div class="main-row f2">
+  <div class="container">
+    <div class="row">
+      <div class="main-col col-sm-12 col-md-12">
+        <div class="row sub-row">
+          <div class="sub-col col-sm-12 col-md-12">
+            {% include 'newsletter' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+<footer class="" {% if section.settings.bkg_image != blank %}style="background-image: url('{{ section.settings.bkg_image | img_url: 'master' }}') !important"{% endif %}>
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+        {% for block in section.blocks %}
+        {% if block.type == 'contact_information' %}
+        <div class="col1 col-md-4 col-sm-12 col-footer">
+          {%comment %}
+          <div class="footer-title">
+            <h3>{{ 'layout.footer.about' | t }}</h3>
+          </div>
+          {% endcomment %}
+          <div class="footer-content">
+            {% if block.settings.image %}
+            <a href="/" itemprop="url" class="logo-footer">
+              <img {% if settings.lazyloading_enable %}class="lazyload" data-{% endif %}src="{{ block.settings.image | img_url: 'master' }}"
+                   alt="{{ section.settings.image.alt | default: shop.name }}"
+                   itemprop="logo">
+            </a>
+            {% else %}
+            <h3>{{ 'layout.footer.contact' | t }}</h3>
+            {% endif %}
+            {% if block.settings.footer_about_us %}
+            <p class="des">{{ block.settings.footer_about_us }}</p>
+            {% endif %}
+            <ul class="footer-contact">
+              {% if block.settings.footer_address != blank %}
+              <li class="address"><span>{{ 'layout.footer.address' | t }} :</span>{{ block.settings.footer_address }}</li>
+              {% endif %}
+              {% if block.settings.footer_phone != blank %}
+              <li class="phone"><span>{{ 'layout.footer.phone' | t }} :</span>{{ block.settings.footer_phone }}</li>
+              {% endif %}
+              {% if block.settings.footer_email != blank %}
+              <li class="email"><span>{{ 'layout.footer.email' | t }} :</span>{{ block.settings.footer_email }}</li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+        {% elsif block.type == 'menu' %}
+        <div class="col col-md-2 col-sm-6 col-footer">
+          <div class="footer-title">
+            <h3>{{ linklists[block.settings.footer_menu_1].title }}</h3>
+          </div>
+          <div class="footer-content">
+            <ul class="list-unstyled text-content">
+              {% for link in linklists[block.settings.footer_menu_1].links %}
+              <li><a href="{{link.url}}">{{link.title}}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% elsif block.type == 'menu_wide' %}
+        <div class="col col3 col-md-3 col-sm-12 col-xs-12 col-footer">
+          <div class="footer-title">
+            <h3>{{ linklists[block.settings.footer_menu_2].title }}</h3>
+          </div>
+          <div class="footer-content">
+            <ul class="list-unstyled text-content">
+              {% for link in linklists[block.settings.footer_menu_2].links %}
+              <li><a href="{{link.url}}">{{link.title}}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% elsif block.type == 'content_box' %}
+        <div class="col col3 col-md-3 col-sm-12 col-xs-12 col-footer">
+          {% if block.settings.footer_content_box_title != blank %}
+          <div class="footer-title"><h3>{{ block.settings.footer_content_box_title }}</h3></div>
+          {% endif %}
+          {% if block.settings.footer_content_box_text != blank %}
+          <div class="footer-content">
+            <p>{{ block.settings.footer_content_box_text }}</p>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% for block in section.blocks %}
+  {% if block.type == 'bottom_footer' %}
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="container-inner">
+        <div class="footer-copyright">
+          <span>{{ block.settings.footer_content_text }}</span>
+        </div>
+        {% if block.settings.footer_social_enable %}
+        {% include 'social-button' %}
+        {% endif %}
+        {% if block.settings.payment_image %}
+        <div class="footer-payment">
+          <a href="#">
+            <img src="{{ block.settings.payment_image | img_url: 'master' }}" alt="payment">
+          </a>
+        </div>
+        {% else %}
+        <div class="paypal-footer footer-payment">
+          {% unless shop.enabled_payment_types == empty %}
+          <ul class="list-unstyled list-inline ct-socials text-center-sm ct-payment">
+            {% assign enabled_payment_types = 'visa,mastercard,amex,paypal' | remove: ' ' | split: ',' %}
+            {% for type in enabled_payment_types %}
+            <li>
+              <a class="f-payment fab fa fa-cc-{{ type }} fa-2x" aria-hidden="true"></a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endunless %}
+        </div>  
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+  <div id="back-top"><i class="fa fa-angle-up"></i></div>
+</footer>
+<script type="text/javascript">
+  $(document).ready(function(){
+    // hide #back-top first
+    $("#back-top").hide();
+    // fade in #back-top
+    $(function () {
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > $('body').height()/3) {
+          $('#back-top').fadeIn();
+        } else {
+          $('#back-top').fadeOut();
+        }
+      });
+      // scroll body to 0px on click
+      $('#back-top').click(function () {
+        $('body,html').animate({scrollTop: 0}, 800);
+        return false;
+      });
+    });
+    // footer toggle
+    if (jQuery(window).width() < 992) {   
+      jQuery('.footer-top .footer-title').click(function(){     
+        jQuery(this).parent('.col').toggleClass('active').siblings().removeClass('active'); 
+        jQuery(this).next('.col .footer-content').toggle(300);
+        jQuery(this).parent('.col.active').siblings().children('.col .footer-content').slideUp(300); 
+      }); 
+    }
+  });
+</script>

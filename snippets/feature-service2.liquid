@@ -1,0 +1,18 @@
+<!--Service Area Start-->
+<div class="ma-corporate-about1 {% if section.settings.bottom_padding %} padding-bottom{% endif %} {% if section.settings.bottom_border %} border-bottom{% endif %}">
+  <div class="row">
+    {% if section.blocks.size > 0 %}
+    {% for block in section.blocks limit:3 %}
+    <div class="col col-sm-4 col-xs-12">
+      <div class="block-wrapper wrapper{{forloop.index}}">
+        <div class="text-des">
+          <h3>{{ block.settings.feature_service_title }}</h3>
+          <p>{{ block.settings.feature_service_description }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>
+<!--End of Service Area-->

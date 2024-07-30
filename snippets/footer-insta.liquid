@@ -1,0 +1,56 @@
+{% if section.settings.insta_get != blank %}
+{{ 'instastory.min.js' | asset_url | script_tag }}
+<div id="instagram_block_home1" class="block">
+  {% if section.settings.insta_title != blank%}
+  <div class="footer-title">
+    <h5>{{ section.settings.insta_title }}</h5>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="row_items content_block owl-carousel owl-theme" id="instafeed">
+    </div>
+  </div>
+  <script type = "text/javascript" >
+    $(document).ready(function() {
+
+        $("#instafeed").instastory({
+            get: "{{ section.settings.insta_get }}",
+            limit: "6",
+            imageSize: 150,
+            after: function() {
+                jQuery("#instafeed a").attr("target","_blank");
+                jQuery("#instafeed a").attr("href", $(this).find('img').attr('src'));
+                jQuery("#instafeed a img").addClass("fancybox");
+                jQuery("#instafeed a img").addClass("img-responsive");
+                jQuery("#instafeed a img").addClass("insta-size");
+                {% if settings.lazyloading_enable %}jQuery("#instafeed a img").addClass("lazyload");{% endif %}
+                $("#instagram_block_home .content_block").owlCarousel({
+                autoPlay: false,
+                items : 6,
+                slideSpeed : 1000,
+                navigation : false,
+                pagination : false,
+                stopOnHover : true,
+                itemsDesktop : [1199, 3],
+                itemsDesktopSmall : [991, 3],
+                itemsTablet : [767, 4],
+                itemsMobile : [480, 2],
+              });
+      		  {% if settings.grid_auto_resize != 'false' -%}
+      		  	mass.resizeInsta();
+      		  {% endif %}
+            }
+        });
+    }); 
+</script>
+  <script type="text/javascript">
+    /*$('.content_block').magnificPopup({
+      type: 'image',
+      delegate: 'm',
+      gallery: {
+        enabled : true
+      }
+    });*/
+  </script>
+</div>
+{% endif %}

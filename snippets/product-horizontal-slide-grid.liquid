@@ -1,0 +1,37 @@
+<div class="col-sm-6 p-sticky">
+  <input type="hidden" id="check-use-zoom" value="1">
+  <input type="hidden" id="light-box-position" value="1">
+  <input type="hidden" id="slide_count" value="2">
+  <input type="hidden" id="product-identify" value="{{ product.id }}">
+  <div class="lightbox-container"></div>
+  {% assign featured_img_src = current_variant.featured_image.src | default: product.featured_image.src %}
+  {% assign featured_img_alt = current_variant.featured_image.alt | default: product.featured_image.alt %}
+
+  {% assign counter = 0 %}
+  <div class="additional-images slide_grid owl-carousel owl-theme">
+    <div class="item  slider-media-thumbs product-zoom-image">
+      {% for media in product.media %}
+        <div data-thumbnail-id="{{ media.id }}">
+          {% render 'product-slider-media-gallery',
+            media: media,
+            product_img_size: product_img_size,
+            forloop: forloop,
+          %}
+        </div>
+        {% assign counter = counter | plus: 1 %}
+        {% if forloop.last == false %}
+          {% assign ind = counter | times: 1 | modulo: 2 %}
+          {% if ind == 0 %}
+            </div>
+            <div class="item product-zoom-image">
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- end wrapper-img-additional -->
+</div>
+<div class="col-sm-6 block-2 product-info-main p-sticky">
+  {% include 'product-page-features' %}
+</div>

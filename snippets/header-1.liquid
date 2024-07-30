@@ -1,0 +1,144 @@
+<style>
+  .account-icon svg{
+    width: 2.1rem;
+    color: #fff;
+    stroke: aliceblue;
+  }
+  .account-icon:hover svg{
+         stroke: red;
+  }
+  .header-inner .box-right{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+.header-inner .box-right  .search-button {
+    font-size: 18px;
+  }
+</style>
+<header class="hd1 {% if section.settings.use_bottom_menu %}bottom-menu{% endif %}">
+  <div id="header-top" class="header-top {% if settings.show_collection_top_image == false and template != 'index' %} nbg {% endif %}"
+       {% if template != 'index' %}
+       {% if settings.show_collection_top_image %}
+
+       {% case template %}
+       {% when 'collection' %}
+       {% if collection.description contains 'alt="topbanner"' %}
+       {% assign coll_image = collection.description | split:'<img src="' | last | split :'" alt="topbanner"' | first %}
+       {{ coll_image }}	        
+       style="background-image:url({{ coll_image }});" 
+       {% else %}
+       style="background-image:url({{ 'collection_top.jpg' | asset_url }});" 
+       {% endif %}
+       {% when 'product' %}
+       {% if product.content contains 'alt="topbanner"' %}
+       {% assign coll_image = product.content | split:'<img src="' | last | split :'" alt="topbanner"' | first %}
+       {{ coll_image }}	        
+       style="background-image:url({{ coll_image }});" 
+       {% else %}
+       style="background-image:url({{ 'collection_top.jpg' | asset_url }});" 
+       {% endif %}
+       {% when 'blog' %}
+       {% if blog.content contains 'alt="topbanner"' %}
+       {% assign coll_image = blog.content | split:'<img src="' | last | split :'" alt="topbanner"' | first %}
+       {{ coll_image }}	        
+       style="background-image:url({{ coll_image }});" 
+       {% else %}
+       style="background-image:url({{ 'collection_top.jpg' | asset_url }});" 
+       {% endif %}
+       {% when 'article' %}
+       {% if article.content contains 'alt="topbanner"' %}
+       {% assign coll_image = article.content | split:'<img src="' | last | split :'" alt="topbanner"' | first %}
+       {{ coll_image }}	        
+       style="background-image:url({{ coll_image }});" 
+       {% else %}
+       style="background-image:url({{ 'collection_top.jpg' | asset_url }});" 
+       {% endif %}
+       {% when 'page' or 'page.contact' or 'page.faq' or 'page.wishlist' %}
+       {% if page.content contains 'alt="topbanner"' %}
+       {% assign coll_image = page.content | split:'<img src="' | last | split :'" alt="topbanner"' | first %}
+       {{ coll_image }}	        
+       style="background-image:url({{ coll_image }});" 
+       {% else %}
+       style="background-image:url({{ 'collection_top.jpg' | asset_url }});" 
+       {% endif %}
+       {% else %}
+       style="background-image:url({{ 'collection_top.jpg' | asset_url }});" 
+       {% endcase %}
+       {% else %}
+       style="background-color: {{ settings.color_top_bg }};" 
+       {% endif %}
+       {% endif %} >
+    {% include 'breadcrumb' %}
+  </div>
+  <div class="header-inner {% if section.settings.show_menu_fixbar -%}fix{% endif %}">
+    <div class="container-inner">
+      {% include 'logo' %}
+      <div class="box box-left">
+        <div class="hozmenu-container">
+          <div class="ma-nav-mobile-container">
+            {% include 'header-mob-nav', menu:'section.settings.header_menu_1' %}
+          </div>
+          <div class="nav-container visible-lg visible-md">
+            {% include 'main-menu', c:false %}
+          </div>
+        </div>
+        <div id="sticky-menu" data-sticky="{% if section.settings.show_menu_fixbar -%}1{% else %}0{% endif %}"></div>
+        <script type="text/javascript">
+          //<![CDATA[
+          var body_class = $('body').attr('class'); 
+          if(body_class.search('common-home') != -1) {
+            $('#pt_menu_home').addClass('act');
+          }	
+          var CUSTOMMENU_POPUP_EFFECT =0
+          var CUSTOMMENU_POPUP_TOP_OFFSET = 70
+          //]]>
+        </script>
+      </div>
+      <div class="box box-right">
+        {% if section.settings.show_search %}{% include 'header-search' %}{% endif %}
+        {% if section.settings.show_settings_menu %}
+        <div class="box-setting">
+          <div class="btn-group">
+            <div class="dropdown-toggle setting-button" data-toggle="dropdown">
+              <i class="icon ion-grid"></i>
+            </div>
+            <div class="dropdown-menu setting-content">
+              <div class="account">
+                <button class="btn btn-link btn-link-current">{{ 'homepage.navigation.my_account' | t }} <i class="fa fa-angle-down"></i></button>
+                <div class="content"  id="top-links">
+                  <ul class="ul-account list-unstyled">
+                    {% if shop.customer_accounts_enabled %}
+                    {% if customer %}
+                    <li><a href="/account"><span>{{ 'homepage.navigation.my_account' | t }}</span></a></li>
+                    <li><a href="/account/logout" id="customer_logout_link"><span>{{ 'layout.customer.log_out' | t }}</span></a></li>
+                    {% else %}
+                    <li><a href="/account/login" id="customer_login_link"><span>{{ 'layout.customer.sign_in' | t }}</span></a></li>
+                    {% if shop.customer_accounts_optional %}
+                    <li><a href="/account/register" id="customer_register_link"><span>{{ 'layout.customer.create_account' | t }}</span></a></li>
+                    {% endif %}
+                    {% endif %}
+                    {% endif %}
+                    <li><a href="/pages/wishlist"><span>{{ 'homepage.navigation.wish_list' | t }}</span></a></li>
+                    <li><a href="/cart"><span>{{ 'homepage.navigation.shopping_cart' | t }}</span></a></li>
+                  </ul>
+                </div>
+              </div>
+              {% include 'header-currency' %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="account-icon">
+          <a href="/account"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" class="icon icon-account" fill="none" viewBox="0 0 18 19">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M6 4.5a3 3 0 116 0 3 3 0 01-6 0zm3-4a4 4 0 100 8 4 4 0 000-8zm5.58 12.15c1.12.82 1.83 2.24 1.91 4.85H1.51c.08-2.6.79-4.03 1.9-4.85C4.66 11.75 6.5 11.5 9 11.5s4.35.26 5.58 1.15zM9 10.5c-2.5 0-4.65.24-6.17 1.35C1.27 12.98.5 14.93.5 18v.5h17V18c0-3.07-.77-5.02-2.33-6.15-1.52-1.1-3.67-1.35-6.17-1.35z" fill="currentColor">
+          </path></svg>
+          </a>
+        </div>
+        {% if section.settings.show_cart %}{% include 'header-cart'%}{% endif %}
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</header>
+

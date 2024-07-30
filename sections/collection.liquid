@@ -1,0 +1,214 @@
+<style>
+   .ocp .module-title h2:before,
+   .ocp .module-title h2:after{
+
+        content:none;
+   }
+   .ocp .module-title h2{
+     box-shadow:unset !important;
+   }
+   .ocp  .module-title:after {
+     background-color:#fff;
+   }
+  .ocp  .module-title:before{border-top: 1px solid #fff;
+     border-bottom: 1px solid #fff;}
+</style>
+
+<div
+  class="main-row {{ section.settings.custom_class }}{% if section.settings.fullwidth == true %}fluid-width{% endif  %}{% if section.settings.background == true %} layer-background {% endif  %} {% if section.settings.collection_layout == 'feature-carousal2' %} bestseller-full{% endif  %} {% if section.settings.top_margin %} margin-top{% endif %}"
+  {% if section.settings.background == true %}
+    {% if section.settings.image != blank -%}
+      style="background-image: url('{{ section.settings.image | img_url: 'master' }}');"
+    {% endif -%}
+  {% endif %}
+  data-section-id="{{ section.id }}"
+>
+  <div class="container">
+    <div class="row">
+      <div class="main-col col-sm-12 col-md-12">
+        <div class="row sub-row">
+          <div class="sub-col col-sm-12 col-md-12">
+            {% include section.settings.collection_layout %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+"name": "Featured collection",
+"class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "collection_layout",
+      "label": "Select section layout",
+      "options": [
+        {
+          "value": "feature-carousal",
+          "label": "Design 1"
+        },
+          {
+          "value": "feature-carousal2",
+          "label": "Design 2"
+        },
+		{
+          "value": "feature-carousal3",
+          "label": "Design 3 (for light background)"
+        }
+      ]
+    },
+	{
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FEATURED PRODUCTS"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Browse the collection of our best selling and trending products"
+    },
+    {
+      "id": "collection",
+      "type": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "view_link_text",
+      "label": "View Link Text"
+    },
+    {
+      "type": "url",
+      "id": "view_link",
+      "label": "Link URL"
+    },
+    {
+      "type": "range",
+      "id": "listing_rows",
+      "label": "No of product rows",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "no_of_products",
+      "label": "No of products in a row",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_tab_count",
+      "label": "No of products to show",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Set Div fullwidth?",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "background",
+      "label": "Add Background",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image",
+      "info": "Used in Design 2"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Sections Background Color",
+      "info": "This option allows you to set different background color than default one for the section.",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "heading_bg_color",
+      "label": "Heading Background Color",
+      "default": "#221e1c",
+      "info": "Used to make it same as the background color. Useful when background image used."
+    },
+    {
+      "type": "checkbox",
+      "id": "product_grid_img_carousel",
+      "label": "Slide All images in product grid?",
+      "default": false,
+      "info": "Used for Product grid carousel enable\/disable"
+    },
+    {
+      "type": "checkbox",
+      "id": "top_margin",
+      "label": "Add top margin?",
+      "info": "White empty space above section",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_padding",
+      "label": "Add bottom margin?",
+      "info": "White empty space below section",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+    "name": "Featured collection",
+    "category": "Collection"
+    }
+  ]
+}
+{% endschema %}
+<style>
+  {% if section.settings.background %}
+  #shopify-section-{{section.id }} .layer-background,
+  #shopify-section-{{section.id }} .module-title.title2 h2,
+  #shopify-section-{{section.id }} .module-title.title2 h2:after, #shopify-section-{{section.id }} .module-title.title2 h2:before{
+    background: {{ section.settings.background_color }};
+  }
+  {%- endif %}
+  #shopify-section-{{section.id }} .bestseller-full .module-title h2,
+  #shopify-section-{{section.id }} .bestseller-full .module-title h2:after,
+  #shopify-section-{{section.id }} .bestseller-full .module-title h2:before {
+    background: {{ section.settings.heading_bg_color }};
+  }
+  {% if section.settings.bottom_padding %}
+  #shopify-section-{{section.id }} .tt_product_module{
+    padding-bottom: 80px;
+  }
+  {% endif %}
+</style>
+{% if settings.grid_auto_resize != 'false' -%}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      mass.resizeGrid('#product_module{{section.id}}',{{section.settings.listing_rows}});
+    });
+    $(window).resize(function() {
+      setTimeout(function () {
+        mass.resizeGrid('#product_module{{section.id}}',{{section.settings.listing_rows}});
+      }, 300);
+
+    });
+  </script>
+{% endif %}

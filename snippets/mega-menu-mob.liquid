@@ -1,0 +1,64 @@
+{% include 'product-grid-variables' %}
+<li class="had_child">
+  <a href="{{link.url}}">{{link.title}}</a>
+  <ul class="">
+    {% for i in (1..4) %}
+    {% capture handle %}mega_menu_col_{{ i }}{% endcapture %}
+
+    {% case block.settings[handle] %}
+
+    {% when 'menu' %}
+    {% capture menu_width %}mega_menu_width_col_{{ i }}{% endcapture %}
+    {% capture menu_title %}mega_menu_title_col_{{ i }}{% endcapture %}
+    {% capture menu_link %}mega_menu_link_col_{{ i }}{% endcapture %}
+    {% capture menusub %}mega_menu_ll_col_{{ i }}{% endcapture %}
+    <li class="had_child">
+      <a href="{{ block.settings[menu_link] }}"><span>{{ block.settings[menu_title] }}</span></a>
+      <ul class="">
+        {% for link in linklists[block.settings[menusub]].links limit:block.settings.menu_items_count %}
+        <li>
+          <a href="{{link.url}}"><span>{{link.title}}</span></a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+
+    {% when 'collection' %}
+    {% capture menu_collection %}mega_menu_collection_col_{{ i }}{% endcapture %}
+    <li class="had_child">
+      <a href="{{ collections[block.settings[menu_collection]].url }}"><span>{{ collections[block.settings[menu_collection]].title }}</span></a>
+      <ul class="level3">
+        {% for product in collections[block.settings[menu_collection]].products limit:block.settings.menu_items_count %}
+        <li>
+          <a href="{{ product.url | within: collection }}"><span>{{ product.title }}</span></a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+
+    {% when 'product' %}
+    {% capture menu_product %}mega_menu_product_col_{{ i }}{% endcapture %}
+    {% assign product = all_products[block.settings[menu_product]] %}
+    {% assign img_size = settings.img_size_grid %}
+    <li class="product-img col-lg-3 col-md-12 col-sm-12 col-xs-12  sub-product">
+      <a href="{{ product.url }}">
+        {% include 'product-grid-image',image:product.featured_image, customclass:'mega-second-image img-responsive' %}
+      </a>
+      <a class="a-mega-second-link" href="{{ product.url | within: collection }}"><span>{{ product.title }}</span></a>
+      {% include 'price'%}
+    </li>
+
+    {% when 'image' %}
+    {% capture menu_title %}mega_menu_title_col_{{ i }}{% endcapture %}
+    {% capture menu_image %}mega_menu_image_col_{{ i }}{% endcapture %}
+    {% capture menu_image_link %}mega_menu_image_link_col_{{ i }}{% endcapture %}
+    <li class=" sub-product">
+      <a href="{{ block.settings[menu_image_link] }}" class="post-thumbnail">
+        {% include 'product-grid-image',image:block.settings[menu_image] %}
+      </a>
+    </li>
+    {% else %}
+    {% endcase %}
+    {% endfor %}
+  </ul>
+</li>

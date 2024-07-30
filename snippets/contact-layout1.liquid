@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <h1>{{ 'contact.form.page_heading' | t }}</h1>
+      <!-- Map area start -->
+      <div>
+        {% if section.settings.show_map %}
+          <h3>{{ 'contact.form.location' | t }}</h3>
+          {{ section.settings.map_code }}
+        {% endif %}
+      </div>
+
+      {% if section.settings.address %}
+        <div class="contact-info">
+          <h3>{{ section.settings.title_address }}</h3>
+          {{ section.settings.address }}
+        </div>
+      {% endif %}
+      <!-- Map area end -->
+      <div class="form-horizontal">
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}
+            <p class="note form-success">
+              {{ 'contact.form.post_success' | t }}
+            </p>
+          {% endif %}
+
+          {% include 'form-errors-custom' %}
+          <fieldset>
+            <legend>{{ 'contact.form.leave_msg' | t }}</legend>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-name">{{ 'contact.form.name' | t }}</label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  id="contactFormName"
+                  name="contact[name]"
+                  class="form-control"
+                  placeholder="{{ 'contact.form.name' | t }}"
+                  value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-name">{{ 'contact.form.email' | t }}</label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  id="contactFormEmail"
+                  name="contact[email]"
+                  class="form-control"
+                  placeholder="{{ 'contact.form.email' | t }}"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-name">{{ 'contact.form.phone' | t }}</label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  id="contactFormPhone"
+                  name="contact[phone]"
+                  class="form-control"
+                  placeholder="{{ 'contact.form.phone' | t }}"
+                  value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-name">{{ 'contact.form.message' | t }}</label>
+              <div class="col-sm-10">
+                <textarea
+                  class="form-control"
+                  rows="10"
+                  id="contactFormMessage"
+                  name="contact[body]"
+                  placeholder="{{ 'contact.form.message' | t }}"
+                >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+              </div>
+            </div>
+            {% if section.settings.accept_check_enable %}
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-name">&nbsp;</label>
+                <div class="col-sm-10">
+                  <p style="float: none; text-align: right; clear: both; margin: 10px 0;">
+                    <input style="float:none; vertical-align: middle;" type="checkbox" id="contact_accept_agree">
+                    <label style="display:inline; float:none" for="agree">
+                      {{ section.settings.accept_text }}
+                    </label>
+                  </p>
+                </div>
+              </div>
+            {% endif %}
+          </fieldset>
+          <div class="buttons submit">
+            <div class="pull-right">
+              <input
+                class="btn btn-primary"
+                id="submitMessage"
+                name="submitMessage"
+                type="submit"
+                value="{{ 'contact.form.send' | t }}"
+              >
+            </div>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+    {% if section.settings.show_content %}
+      <div class="col-sm-12">
+        {{ page.content }}
+      </div>
+    {% endif %}
+  </div>
+</div>

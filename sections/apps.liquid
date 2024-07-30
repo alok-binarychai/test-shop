@@ -1,0 +1,124 @@
+{% liquid
+    render 'section-start', fluid: false
+    for block in section.blocks
+      render block
+    endfor
+    render 'section-end'
+  %}
+  {% schema %}
+  {
+    "name": "App wrapper",
+    "settings": [
+      {
+        "type": "select",
+        "id": "fullwidth",
+        "label": "Section Width Setting",
+        "default": "0",
+        "options": [
+          {
+            "value": "0",
+            "label": "Standard Container Width"
+          },
+          {
+            "value": "1",
+            "label": "Full Width with Margins"
+          },
+          {
+            "value": "2",
+            "label": "Full Width, No Margins"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "background",
+        "label": "Add Background",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "color",
+            "label": "Color"
+          },
+          {
+            "value": "gradient",
+            "label": "Gradient"
+          },
+          {
+            "value": "image",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Section Background Color",
+        "info": "Choose a background color for the section, different from the default setting.",
+        "default": "#f8f8f8"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Gradient Background",
+        "default": "linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)",
+        "info": "Select a linear or radial gradient background. Use default options or create your own [here](https://cssgradient.io) or [here](https://mycolor.space)."
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Section Background Image",
+        "info": "Choose an image for the section's background. If left empty, the background color setting will be used."
+      },
+      {
+        "type": "checkbox",
+        "id": "top_margin",
+        "label": "Enable Top Margin?",
+        "info": "Include top margin space outside the section.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "top_padding",
+        "label": "Enable Top Padding?",
+        "info": "Insert a padding space at the beginning of the section.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "bottom_padding",
+        "label": "Enable Bottom Padding?",
+        "info": "Insert a padding space at the end of the section.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "bottom_margin",
+        "label": "Enable Bottom Margin?",
+        "info": "Include bottom margin space outside the section.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "bottom_border",
+        "label": "Display Bottom Border?",
+        "info": "Display a line at the bottom to denote section separation",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "@app"
+      }
+    ],
+    "presets": [
+      {
+        "name": "App wrapper"
+      }
+    ]
+  }
+  {% endschema %}
+  

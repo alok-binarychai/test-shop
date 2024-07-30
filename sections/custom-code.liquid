@@ -1,0 +1,25 @@
+{{ section.settings.liquid-text }}
+{{ section.settings.html-text }}
+{% schema %}
+{
+  "name": "Custom Code Box",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "liquid-text",
+      "label": "Custom Liquid",
+	  "info": "Can be used for general liquid code input as well as apps code input"
+    },
+	{
+      "type": "html",
+      "id": "html-text",
+      "label": "Custom Html",
+	  "info": "Can be used for adding html tags and javascript code snippet"
+    }
+  ],
+  "presets": [{
+    "name": "Custom Code Box",
+    "category": "Text Sections"
+  }]
+}
+{% endschema %}

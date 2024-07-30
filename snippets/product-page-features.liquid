@@ -1,0 +1,465 @@
+{{ 'product-meta-info.css' | asset_url | stylesheet_tag }}
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+%}
+{% form 'product', product, id: 'form_buy', name: 'form_buy' %}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'reviews' -%}
+      {% capture review_cclass %} mt{{ block.settings.mt }} {% endcapture %}
+      {% render 'review', cclass: review_cclass %}
+
+       {%- elsif block.type == 'liquid' -%}
+         <div>{{ block.settings.liquid }}</div>
+    {%- elsif block.type == 'title' -%}
+      <h2
+        class="product-name mt{{ block.settings.mt }}"
+        itemprop="name"
+        {{ block.shopify_attributes }}
+      >
+        {{ product.title | escape }}
+      </h2>
+
+    {%- elsif block.type == 'text' -%}
+      <div class="item_type mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        {{- block.settings.text -}}
+      </div>
+
+    {%- elsif block.type == 'price' -%}
+      {% if on_sale %}
+        <p class="rate-special">
+          -<span class="percentage">
+            {{-
+              product.compare_at_price
+              | minus: product.price
+              | times: 100.0
+              | divided_by: product.compare_at_price
+              | round
+            -}}</span
+          >%
+        </p>
+      {% endif %}
+      {% capture price_cclass %}{%- if block.settings.text_size != 'fs-3' %}{{ block.settings.text_size }}{% endif -%} mt{{ block.settings.mt }} {% endcapture %}
+      {% render 'price', page: true, price_class: price_cclass, show_badges: true %}
+    {%- elsif block.type == 'availability' -%}
+      <div class="availability mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        <link
+          itemprop="availability"
+          href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+        >
+        {{ 'products.product.availability' | t }}:
+        <script>
+          var inv_qty = {};
+          {% for var in product.variants %}
+          inv_qty[{{- var.id -}}] = {{ var.inventory_quantity | default: 0 }};
+          {% endfor %}
+        </script>
+        {% if product.variants.first.inventory_management == 'shopify' %}
+          {% if product.variants.first.inventory_quantity >= 10 %}
+            <span class="ex-text">{{ 'products.product.in_stock' | t }}</span>
+          {% elsif product.variants.first.inventory_quantity > 0 and product.variants.first.inventory_quantity < 10 %}
+            <span style="font-weight:bold; color:orange" class="ex-text">
+              {{- product.variants.first.inventory_quantity }}
+              {{ 'products.product.in_stock' | t -}}
+            </span>
+          {% else %}
+            <span style="font-weight:bold; color:red" class="ex-text">{{ 'products.product.out_stock' | t }}</span>
+          {% endif %}
+        {% else %}
+          <span style="" class="ex-text">
+            {% if product.available %}
+              {{ 'products.product.in_stock' | t -}}
+            {%- else %}
+              {{ 'products.product.out_stock' | t -}}
+            {%- endif %}
+          </span>
+        {% endif %}
+      </div>
+
+    {%- elsif block.type == 'vendor' -%}
+      <div class="vendor mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        {{- 'products.product.brand' | t }}: {{ product.vendor | link_to_vendor -}}
+      </div>
+
+    {%- elsif block.type == 'sku' -%}
+      <div
+        class="skuvariant mt{{ block.settings.mt }} {% if current_variant.sku.size == blank %} hide{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        {{ 'products.product.sku' | t }}:
+        <span class="variant-sku">{{ current_variant.sku }}</span>
+      </div>
+
+    {%- elsif block.type == 'barcode' -%}
+      <div
+        class="barcodevariant mt{{ block.settings.mt }} {% if current_variant.barcode.size == blank %} hide{% endif %}"
+        {{ block.shopify_attributes }}
+      >
+        {{ 'products.product.barcode' | t }}:
+        <span class="variant-barcode">{{ current_variant.barcode }}</span>
+      </div>
+
+    {%- elsif block.type == 'summay' -%}
+      <p class="short-des mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        {% if product.description contains '[summary]' %}
+          {{ product.description | split: '[summary]' | last | split: '[/summary]' | first }}
+        {% else %}
+          {% assign product_summary_words = block.settings.product_summary_words | times: 1 %}
+          {% if block.settings.show_summary_stripped %}
+            {{
+              product.content
+              | split: '[summary]'
+              | first
+              | split: '[video]'
+              | first
+              | split: '[tab]'
+              | first
+              | split: '[deal]'
+              | first
+              | split: '[affiliate]'
+              | first
+              | strip_html
+              | truncatewords: product_summary_words
+            }}
+          {% else %}
+            {{
+              product.content
+              | split: '[summary]'
+              | first
+              | split: '[video]'
+              | first
+              | split: '[tab]'
+              | first
+              | split: '[deal]'
+              | first
+              | split: '[affiliate]'
+              | first
+              | truncatewords: product_summary_words
+            }}
+          {% endif %}
+        {% endif %}
+      </p>
+    {%- elsif block.type == 'deal' -%}
+      {% if product.description contains '[deal]' %}
+        <div class="item-inner mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+            <div id="Countdown{{product.id}}" class="box-timer cc pp"></div>
+        </div>
+        <script type="text/javascript">
+          $(function () {
+            $('#Countdown{{product.id}}').countdown({
+              until: new Date('{{ product.description | split:'[deal]' | last | split :'[/deal]' | first }}'),
+              labels: ['Years', 'Months ', 'Weeks', 'Days', 'Hrs', 'Mins', 'Secs'],
+              labels1: ['Year', 'Month ', 'Week', 'Day', 'Hr', 'Min', 'Sec'],
+              });
+          });
+        </script>
+      {% endif %}
+    {%- elsif block.type == 'product-variants' %}
+      <div
+        class="form-group pb-2"
+        {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+          style="display:none"
+        {% endif %}
+        {{ block.shopify_attributes }}
+      >
+        <select name="id" id="productSelect" form="form_buy" class="form-control">
+          {% for variant in product.variants %}
+            {% if variant.available %}
+              <option
+                {% if variant == product.selected_or_first_available_variant %}
+                  selected="selected"
+                {% endif %}
+                data-sku="{{ variant.sku }}"
+                value="{{ variant.id }}"
+              >
+                {{ variant.title }} - {{ variant.price | money_with_currency }}
+              </option>
+            {% else %}
+              <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+        {% if block.settings.show_variant_swatches != 'false' %}
+          {% if product.available and product.variants.size > 1 %}
+            {% for option in product.options %}
+              {% comment %} {% include 'swatch' with option %} {% endcomment %}
+
+              {% render 'swatch', swatch: option, block: block %}
+            {% endfor %}
+          {% endif %}
+        {% else %}
+          <style type="text/css">
+            .selector-wrapper,
+            #productSelect {
+              display: block;
+            }
+          </style>
+        {% endif %}
+      </div>
+    {%- elsif block.type == 'size-chart' %}
+    <div class="form-group mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+      {% if block.settings.size_chart_src != 'none' %}
+        <div class="col-md-12">
+          <p class="mb-8">
+            <i class="fas fa-tape"></i>
+            <a class="text-reset text-decoration-underline m-l-2" data-toggle="modal" href="#modalSizeChart">
+              {{- 'products.product.size_chart' | t -}}
+            </a>
+          </p>
+    
+          <!-- Modal content -->
+          <div class="modal fade" id="modalSizeChart" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">{{ 'products.product.size_chart' | t }}</h5>
+                  <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  {% case block.settings.size_chart_src %}
+                    {% when 'image' %}
+                      {% if block.settings.size_chart_image %}
+                        <img
+                          src="{{ block.settings.size_chart_image | image_url }}"
+                          alt="{{ 'products.product.size_chart' | t }}"
+                          width="auto"
+                          height="auto"
+                          loading="lazy"
+                          class="img-responsive"
+                        >
+                      {% endif %}
+    
+                    {% when 'html' %}
+                      {% if block.settings.size_chart_html %}
+                        {{ block.settings.size_chart_html }}
+                      {% endif %}
+    
+                    {% when 'page' %}
+                      {% if block.settings.size_chart_page %}
+                        {{ block.settings.size_chart_page.content }}
+                      {% endif %}
+                  {% endcase %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <style>
+            #modalSizeChart .modal-content {
+              /* Your custom modal styles here, if needed */
+            }
+    
+            #modalSizeChart .size-chart-table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+    
+            #modalSizeChart .size-chart-table th,
+            #modalSizeChart .size-chart-table td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: center;
+            }
+    
+            #modalSizeChart .size-chart-table th {
+              background-color: #f8f9fa;
+            }
+          </style>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+              var modal = document.getElementById('modalSizeChart');
+    
+              modal.addEventListener('show.bs.modal', function () {
+                document.body.appendChild(modal);
+              });
+            });
+          </script>
+        </div>
+      {% endif %}
+    </div>
+    {%- elsif block.type == 'form-buy' -%}
+      <div id="product" class="mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        <div class="form-group">
+          {{ form | payment_terms }}
+          {% if settings.product_quantity_message %}
+            <div><span id="variantQuantity" class="variant-quantity"></span></div>
+          {% endif %}
+          {% if block.settings.product_quantity_enable %}
+            <label class="control-label" for="Quantity">{{ 'products.product.quantity' | t }}:</label>
+            <div class="quantity-box">
+              <input
+                type="text"
+                name="quantity"
+                value="1"
+                size="2"
+                id="Quantity"
+                onkeyup="updatecartsticky(1)"
+                class="form-control"
+              >
+              <input type="button" id="minus" value="-" class="form-control">
+              <input type="button" id="plus" value="&#43;" class="form-control">
+            </div>
+          {% endif %}
+          {% render 'product-wishlist2' %}
+          {% comment %} <span id="stickyTrigger"></span> {% endcomment %}
+          {% if product.description contains '[affiliate]' %}
+            {% capture affiliate %} {{ product.description | split: '[affiliate]' | last | split : '[/affiliate]' | first }} {% endcapture %}
+            <button
+              class="button button-cart btn"
+              type="button"
+              onclick="window.open('{{ affiliate | split : '|' | last }}', '_blank')"
+              id="button-cart-affiliate"
+              form="form_buy"
+              data-loading-text="{{ 'products.product.loading' | t }}"
+            >
+              {{ affiliate | split: '|' | first }}
+            </button>
+          {% else %}
+            {% if template != 'product.pre-order' %}
+              <button
+                class="button button-cart btn"
+                type="button"
+                id="button-cart"
+                form="form_buy"
+                data-loading-text="{{ 'products.product.loading' | t }}"
+              >
+                {{ 'products.product.add_to_cart' | t }}
+              </button>
+              {% if block.settings.show_buy_now %}
+                {{ form | payment_button }}
+              {% endif %}
+            {% elsif template == 'product.pre-order' %}
+              <button
+                class="button button-cart btn"
+                type="button"
+                id="button-cart-buy"
+                form="form_buy"
+                data-loading-text="{{ 'products.product.loading' | t }}"
+              >
+                {{ 'products.product.pre_order' | t }}
+              </button>
+            {% endif %}
+          {% endif %}
+          <style>
+            {% if block.settings.overwrite_addtocart_color %}
+            .product-info-main .button-cart{
+              color: {{ block.settings.addtocart_color_text }};
+              background-color: {{ block.settings.addtocart_color_bg }};
+            }
+            .product-info-main .button-cart:hover {
+              background: {{ block.settings.addtocart_color_text }};
+              color: {{ block.settings.addtocart_color_bg }};
+              border-color: {{ block.settings.addtocart_color_bg }};
+            }
+            {% endif %}
+            {% if block.settings.overwrite_buy_now_color %}
+            .shopify-payment-button__button--unbranded{
+              color: {{ block.settings.buy_now_color_text }} !important;
+              background-color: {{ block.settings.buy_now_color_bg }} !important;
+            }
+            .shopify-payment-button__button--unbranded:hover {
+              background: {{ block.settings.buy_now_color_text }} !important;
+              color: {{ block.settings.buy_now_color_bg }} !important;
+              border-color: {{ block.settings.buy_now_color_bg }} !important;
+            }
+            {% endif %}
+          </style>
+        </div>
+      </div>
+    {% elsif block.type == 'trust-badge' %}
+      {% if block.settings.trust_badge_image %}
+        <div class="mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+          <a href="#">
+            <img
+              src="{{ block.settings.trust_badge_image | image_url }}"
+              class="w-100"
+              width="{{ block.settings.trust_badge_image.width }}"
+              height="{{ block.settings.trust_badge_image.height }}"
+              {% if settings.lazyloading_enable %}
+                loading="lazy"
+              {% endif %}
+              alt="{{ product.title }}"
+            >
+          </a>
+        </div>
+      {% endif %}
+    {%- elsif block.type == 'tags' -%}
+      <div class="short-des mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        {{ 'products.product.tags' | t }}:
+        {% for tag in product.tags %}
+          {% unless tag contains '_' %}
+            <a href="/collections/all/{{ tag | handle }}">{{ tag }}</a>
+            {% unless forloop.last %}, {% endunless %}
+          {% endunless %}
+        {% endfor %}
+      </div>
+
+    {%- elsif block.type == 'collections' -%}
+      <div class="short-des mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+        {{ 'products.product.collections' | t }}:
+        {% for collection in product.collections %}
+          <a href="{{ collection.url }}">{{ collection.title }}</a>
+          {% unless forloop.last %}, {% endunless %}
+        {% endfor %}
+      </div>
+
+    {%- elsif block.type == 'social-sharing' -%}
+      <div
+        class="addthis_toolbox addthis_default_style mt{{ block.settings.mt }}"
+        data-url="{{ product.url }}"
+        {{ block.shopify_attributes }}
+      >
+        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a>
+        <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a>
+      </div>
+      <script
+        type="text/javascript"
+        src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"
+        defer
+      ></script>
+
+    {%- elsif block.type == 'collapse_block' %}
+    <div class="product-collapse-panel mt{{ block.settings.mt }}" {{ block.shopify_attributes }}>
+      <!-- Trigger/button for the collapse -->
+      <div class="product-collapse-header" data-toggle="collapse" data-target="#collapse-{{ forloop.index }}">
+        {% if block.settings.collapse_show_title %}
+          <h3 class="col-xs-12">
+            {{ block.settings.collapse_title }}
+            <span class="collapse-indicator pull-right">
+              {%- if block.settings.collapse_open %}-{% else %}+{% endif -%}
+            </span>
+          </h3>
+        {% endif %}
+      </div>
+      <!-- The actual content to be collapsed/expanded -->
+      <div
+        class="collapse product-collapse-content col-xs-12 {% if block.settings.collapse_open %}in{% endif %}"
+        id="collapse-{{ forloop.index }}"
+      >
+        {% if block.settings.collapse_type == 'description' %}
+          {{
+            product.content
+            | split: '[summary]'
+            | first
+            | split: '[video]'
+            | first
+            | split: '[tab]'
+            | first
+            | split: '[deal]'
+            | first
+            | split: '[affiliate]'
+            | first
+          }}
+        {% else %}
+          {{ block.settings.collapse_content }}
+        {% endif %}
+      </div>
+    </div>
+    
+    {%- elsif block.type == 'divider' -%}
+      <hr class="mt{{ block.settings.mt }} mb{{ block.settings.mb }}" {{ block.shopify_attributes }}>
+    {% elsif block.type == '@app' %}
+      {% render block %}
+    {% endif %}
+  {% endfor %}
+{% endform %}

@@ -1,0 +1,61 @@
+<div class="hozmenu">
+  <div class="navbar">
+    <div id="navbar-inner" class="navbar-inner navbar-inactive">
+      <div class="menu-mobile">
+        <a class="btn btn-navbar navbar-toggle">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <span class="brand navbar-brand">{{ 'homepage.navigation.menu' | t }}</span>
+      </div>
+      <ul role="menu" id="ma-mobilemenu" class="mobilemenu originalmenu nav-collapse collapse">
+        {% for link in linklists[section.settings.header_menu_1].links %}
+        {% assign child_list_handle = link.title | handleize %}
+        {% assign megamenu = false %}
+
+        {% for block in section.blocks %}
+        {% if block.type == 'megamenu' %}
+        {% if child_list_handle == block.settings.mega_menu %}
+        {% include 'mega-menu-mob' %}
+        {% assign megamenu = true %}
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+        {% if megamenu == false %}
+        {% if linklists[child_list_handle].links != blank %}      
+        <li class="had_child">
+          <a href="{{link.url}}"><span>{{link.title}}</span></a>
+          <ul class="">
+            {% for childlink in linklists[child_list_handle].links %}
+            {% assign grand_child_list_handle = childlink.title | handleize %}
+
+            <li {% if linklists[grand_child_list_handle].links != blank %}class="had_child" {% endif %}>
+              <a href="{{ childlink.url }}"><span>{{ childlink.title | escape }}</span></a>
+              {% if linklists[grand_child_list_handle].links != blank %}
+              <ul class="level3">
+                {% for grand_childlink in linklists[grand_child_list_handle].links %}
+                <li>
+                  <a class="" href="{{ grand_childlink.url }}"><span>{{ grand_childlink.title | escape }}</span></a>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </li>
+
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+        <li class="">
+          <a href="{{link.url}}">{{link.title}}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- end menu area -->			

@@ -1,0 +1,642 @@
+{% render 'section-start', fluid: false %}
+{% if section.settings.heading != blank %}
+  <div class="title ymk">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+{% endif %}
+<div class="booking-form {% if section.settings.form_width == 'full' %}full{% endif %}">
+  <form>
+    <!-- Add a container for the tabs -->
+    <div>
+      {% comment %} {{ current_tags }} {% endcomment %}
+      <span id="urlparts"></span>
+      {% if section.settings.hide_tab_headings == false %}
+        <div class="tabs-heading">
+          <!-- Nav tabs -->
+          <ul class="nav cust nav-pills" role="tablist">
+            {% for block in section.blocks %}
+              <li role="presentation" class="{% if forloop.first %}active{% endif %}">
+                <a href="#filter-{{ block.id }}" aria-controls="filter-{{ block.id }}" role="tab" data-toggle="tab">
+                  {{- block.settings.title -}}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <!-- Tab panes -->
+      <div class="tab-content">
+        {% assign script_included = false %}
+        {% for block in section.blocks %}
+          <!-- First filter tab pane -->
+          <div role="tabpanel" class="tab-pane {% if forloop.first %}active{% endif %}" id="filter-{{ block.id }}">
+            <div class="row">
+              {% assign cols = block.settings.no_of_filters | times: 1 %}
+              {% assign total_cols = block.settings.no_of_filters | plus: 1 %}
+              <div class="col-sm-{{ 12 | divided_by: total_cols }} col-xs-6">
+                <div class="form-group">
+                  <label for="filterSel1{{block.id}}" class="form-label">{{ block.settings.filter_1_title }}</label>
+                  <select
+                    name="optone{{block.id}}"
+                    id="filterSel1{{block.id}}"
+                    size="1"
+                    placeholder="{{ block.settings.filter_1_title }}"
+                    class="form-control"
+                    aria-label="{{ block.settings.filter_1_title }}"
+                  >
+                    <option value="" selected="selected">{{ block.settings.filter_1_title }}</option>
+                  </select>
+                  <span class="select-arrow"></span>
+                </div>
+              </div>
+              <div class="col-sm-{{ 12 | divided_by: total_cols }} col-xs-6">
+                <div class="form-group">
+                  <label for="filterSel2{{block.id}}" class="form-label">{{ block.settings.filter_2_title }}</label>
+                  <select
+                    name="opttwo{{block.id}}"
+                    id="filterSel2{{block.id}}"
+                    size="1"
+                    placeholder="{{ block.settings.filter_2_title }}"
+                    class="form-control"
+                    aria-label="{{ block.settings.filter_2_title }}"
+                  >
+                    <option value="" selected="selected">{{ block.settings.filter_2_title }}</option>
+                  </select>
+                  <span class="select-arrow"></span>
+                </div>
+              </div>
+              {% if cols > 2 %}
+                <div class="col-sm-{{ 12 | divided_by: total_cols }} col-xs-6">
+                  <div class="form-group">
+                    <label for="filterSel3{{block.id}}" class="form-label">{{ block.settings.filter_3_title }}</label>
+                    <select
+                      name="optthree{{block.id}}"
+                      id="filterSel3{{block.id}}"
+                      size="1"
+                      placeholder="{{ block.settings.filter_3_title }}"
+                      class="form-control"
+                      aria-label="{{ block.settings.filter_3_title }}"
+                    >
+                      <option value="" selected="selected">{{ block.settings.filter_3_title }}</option>
+                    </select>
+                    <span class="select-arrow"></span>
+                  </div>
+                </div>
+              {% endif %}
+              {% if cols > 3 %}
+                <div class="col-sm-{{ 12 | divided_by: total_cols }} col-xs-6">
+                  <div class="form-group">
+                    <label for="filterSel4{{block.id}}" class="form-label">{{ block.settings.filter_4_title }}</label>
+                    <select
+                      name="optfour{{block.id}}"
+                      id="filterSel4{{block.id}}"
+                      size="1"
+                      placeholder="{{ block.settings.filter_4_title }}"
+                      class="form-control"
+                      aria-label="{{ block.settings.filter_4_title }}"
+                    >
+                      <option value="" selected="selected">{{ block.settings.filter_4_title }}</option>
+                    </select>
+                    <span class="select-arrow"></span>
+                  </div>
+                </div>
+              {% endif %}
+              <div class="{% if cols > 3 %} col-sm-4 {% else %}col-sm-{{ 12 | divided_by: total_cols }}{% endif %}{% if cols == 3 %} col-xs-6 {% endif %}">
+                <div class="form-group">
+                  <label class="form-label">&nbsp;</label>
+                  <div class="form-btn">
+                    <button
+                      type="button"
+                      id="button"
+                      class="btn btn-primary w-100 submit-btn"
+                      aria-label="{{ 'general.year_make_model.search' | t }}"
+                      onclick="window.location.assign(buildUrl('{{ block.id }}', {{ cols }}, '{{ section.settings.filter_type }}'));"
+                    >
+                      {{ 'general.year_make_model.search' | t }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% if block.settings.data_source == 'menu' %}
+              <script>
+                let makeObject{{ block.id }} = {
+                  {% for link in linklists[block.settings.menu_handle].links %}
+                    "{{- link.title | handleize -}}": {
+                      {% for child_link in link.links %}
+                        "{{- child_link.title | handleize -}}": [
+                          {% for grandchild_link in child_link.links %}
+                            "{{- grandchild_link.title | handleize -}}"{% unless forloop.last %},{% endunless %}
+                          {% endfor %}
+                        ]{% unless forloop.last %},{% endunless %}
+                      {% endfor %}
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                };
+              </script>
+            {% elsif block.settings.data_source == 'file' and script_included == false %}
+              <script src="{{ 'makeObject.js' | asset_url }}" defer></script>
+              {% assign script_included = true %}
+            {% endif %}
+            <script type="text/javascript">
+              // This section creates the dynamic dropdowns
+              document.addEventListener('DOMContentLoaded', (event) => {
+                let filterSel1{{block.id}} = document.getElementById('filterSel1{{block.id}}'),
+                  filterSel2{{block.id}} = document.getElementById('filterSel2{{block.id}}'),
+                  filterSel3{{block.id}} = document.getElementById('filterSel3{{block.id}}'),
+                  filterSel4{{block.id}} = document.getElementById('filterSel4{{block.id}}');
+                  let dataObject{{ forloop.index }} = {% if block.settings.data_source == 'menu' %} makeObject{{ block.id }} {% else %} {{ block.settings.variable_name }} {% endif %};
+                  for (let make{{block.id}} in dataObject{{ forloop.index }}) {
+                  filterSel1{{block.id}}.options[filterSel1{{block.id}}.options.length] = new Option(make{{block.id}}, make{{block.id}});
+                }
+                filterSel1{{block.id}}.onchange = function () {
+                  filterSel2{{block.id}} ? filterSel2{{block.id}}.length = 1 : undefined; // remove all options bar first
+                  filterSel3{{block.id}} ? filterSel3{{block.id}}.length = 1 : undefined; // remove all options bar first
+                  filterSel4{{block.id}} ? filterSel4{{block.id}}.length = 1 : undefined; // remove all options bar first
+                  if (this.selectedIndex < 1) return;
+                  {% if cols > 2 %}
+                    for (let model{{block.id}} in dataObject{{ forloop.index }}[this.value]) {
+                      filterSel2{{block.id}}.options[filterSel2{{block.id}}.options.length] = new Option(model{{block.id}}, model{{block.id}});
+                    }
+                  {% else %}
+                  let model{{block.id}}s = dataObject{{ forloop.index }}[this.value];
+                  for (let i = 0; i < model{{block.id}}s.length; i++) {
+                    filterSel2{{block.id}}.options[filterSel2{{block.id}}.options.length] = new Option(model{{block.id}}s[i], model{{block.id}}s[i]);
+                  }
+                {% endif %}
+                };
+                {% if cols > 2 %}
+                filterSel1{{block.id}}.onchange(); // reset in case page is reloaded
+                filterSel2{{block.id}}.onchange = function () {
+                  filterSel3{{block.id}} ? filterSel3{{block.id}}.length = 1 : undefined; // remove all options bar first
+                  filterSel4{{block.id}} ? filterSel4{{block.id}}.length = 1 : undefined; // remove all options bar first
+                  if (this.selectedIndex < 1) return;
+                  {% if cols > 3 %}
+                    for (let year{{block.id}} in dataObject{{ forloop.index }}[filterSel1{{block.id}}.value][this.value]) {
+                      filterSel3{{block.id}}.options[filterSel3{{block.id}}.options.length] = new Option(year{{block.id}}, year{{block.id}});
+                    }
+                  {% else %}
+                  let year{{block.id}}s = dataObject{{ forloop.index }}[filterSel1{{block.id}}.value][this.value];
+                  for (let i = 0; i < year{{block.id}}s.length; i++) {
+                    filterSel3{{block.id}}.options[filterSel3{{block.id}}.options.length] = new Option(year{{block.id}}s[i], year{{block.id}}s[i]);
+                  }
+                {% endif %}
+                };
+              {% endif %}
+                {% if cols > 3 %}
+                filterSel3{{block.id}}.onchange = function () {
+                  filterSel4{{block.id}} ? filterSel4{{block.id}}.length = 1 : undefined; // remove all options bar first
+                  if (this.selectedIndex < 1) return;
+                  let type{{block.id}}s = dataObject{{ forloop.index }}[filterSel1{{block.id}}.value][filterSel2{{block.id}}.value][this.value];
+                  for (let i = 0; i < type{{block.id}}s.length; i++) {
+                    filterSel4{{block.id}}.options[filterSel4{{block.id}}.options.length] = new Option(type{{block.id}}s[i], type{{block.id}}s[i]);
+                  }
+                };
+                {% endif %}
+              });
+            </script>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </form>
+</div>
+{% render 'section-end' %}
+{% schema %}
+{
+  "name": "Multi Level Filter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Primary Heading",
+      "default": "Filter By Year, Make, Model"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color of the Heading",
+      "default": "#ffde00"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_tab_headings",
+      "label": "Hide Tab Headings?",
+      "info": "Hide the tab headings. Ideal for a single filter section.",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "label": "Filter Type",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Theme Default"
+        },
+        {
+          "value": "sdapp",
+          "label": "Search & Discovery App Filters"
+        }
+      ],
+      "info": "Select the filter type to be used. The default option is for the theme's default filter, while the Search & Discovery App Filters option is for the Search & Discovery app. Note that the app must be installed and configured for this option to work. Also the values should be in the format of the app as it is case insensitive and a search for 'abc' won't yield results if the tag is added as 'Abc'."
+    },
+    {
+      "type": "checkbox",
+      "id": "move_up",
+      "label": "Move up to the section above?",
+      "default": false,
+      "info": "This option is useful if you want to show the filter on the section above like a slideshow."
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Set Div fullwidth?",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "form_width",
+      "label": "Form Width",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "full",
+          "label": "Container Width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Add Background",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "gradient",
+          "label": "Gradient"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section Background Color",
+      "info": "Choose a background color for the section, different from the default setting.",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Gradient Background",
+      "default": "linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)",
+      "info": "Select a linear or radial gradient background. Use default options or create your own [here](https://cssgradient.io) or [here](https://mycolor.space)."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Section Background Image",
+      "info": "Choose an image for the section's background. If left empty, the background color setting will be used."
+    },
+    {
+      "type": "checkbox",
+      "id": "top_margin",
+      "label": "Enable Top Margin?",
+      "info": "Include top margin space outside the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "top_padding",
+      "label": "Enable Top Padding?",
+      "info": "Insert a padding space at the beginning of the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_padding",
+      "label": "Enable Bottom Padding?",
+      "info": "Insert a padding space at the end of the section.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_margin",
+      "label": "Enable Bottom Margin?",
+      "info": "Include bottom margin space outside the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_border",
+      "label": "Display Bottom Border?",
+      "info": "Display a line at the bottom to denote section separation",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filter",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "no_of_filters",
+          "label": "Number of Filters",
+          "default": "3",
+          "options": [
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Search By Year, Make, Model"
+        },
+        {
+          "type": "select",
+          "id": "data_source",
+          "label": "Source of Data",
+          "default": "file",
+          "options": [
+            {
+              "value": "file",
+              "label": "File"
+            },
+            {
+              "value": "menu",
+              "label": "Filter Menu"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "variable_name",
+          "label": "Variable Name in the File",
+          "default": "makeObject",
+          "info": "Specify the file to be used as a data source. For multiple filter secions, duplicate the file, modify the JSON data, and specify the new file name here. This file can be located or newly created in the assets section of the theme editor. After completion, tag the relevant products with keywords to make them searchable."
+        },
+        {
+          "type": "link_list",
+          "id": "menu_handle",
+          "label": "Handle of the Menu",
+          "info": "Specify the handle for the multi-level menu to be used as a filtering tool. This handle can be found in the menu section of your theme editor."
+        },
+        {
+          "type": "text",
+          "id": "filter_1_title",
+          "label": "Title of Filter 1",
+          "default": "Make"
+        },
+        {
+          "type": "text",
+          "id": "filter_2_title",
+          "label": "Title of Filter 2",
+          "default": "Model"
+        },
+        {
+          "type": "text",
+          "id": "filter_3_title",
+          "label": "Title of Filter 3",
+          "default": "Year"
+        },
+        {
+          "type": "text",
+          "id": "filter_4_title",
+          "label": "Title of Filter 4",
+          "default": "Type"
+        }
+      ]
+    }
+  ],
+  "presets": [
+  ]
+}
+{% endschema %}
+<style>
+    #shopify-section-{{ section.id }} .module-title h2 {
+      color: {{ section.settings.heading_color }};
+    }
+
+    @media(min-width: 768px){
+      #shopify-section-{{section.id }} .container-relative {
+        position: relative;
+        width: 100%; /* Full width or any specific width */
+      }
+
+      #shopify-section-{{section.id }} .centered-div {
+        position: absolute;
+        top: 0%;
+        left: 50%;
+        transform: translate(-50%, -100%);
+        z-index: 9;
+      }
+    }
+    @media(max-width: 991px){
+      #shopify-section-{{section.id }} .centered-div {
+        transform: translate(-50%, -80%);
+        width: 90%;
+      }
+      #shopify-section-{{section.id }} .booking-form {
+        padding: 20px 10px;
+      }
+      #shopify-section-{{section.id }} .booking-form .form-label {
+        display: none;
+      }
+    }
+      @media(max-width: 767px){
+      #shopify-section-{{section.id }} .centered-div {
+        transform: none;
+        width: 100%;
+      }
+      #shopify-section-{{section.id }} .booking-form {
+        padding: 40px 10px 10px;
+        margin: 0;
+      }
+      #shopify-section-{{section.id }} .booking-form .form-label {
+        display: none;
+      }
+    }
+    #shopify-section-{{section.id }} .centered-div .booking-form {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    #shopify-section-{{section.id }} .tabs-heading {
+      justify-content: center;
+      display: flex;
+  }
+  #shopify-section-{{section.id }} .nav-pills.cust {
+      background-color: {{ settings.color_skin_2 }};
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: {{  settings.color_body }};
+      text-transform: uppercase;
+      display: inline-block;
+  }
+  #shopify-section-{{section.id }} .tab-content {
+        background: {{ settings.color_skin_2 }};
+        padding: 10px;
+        border-radius: 5px;
+    }
+    #shopify-section-{{section.id }} .booking-form .form-control {
+      background-color: #fff;
+      border-radius: 5px;
+    }
+      /* Custom styles for the pill slide effect */
+      #shopify-section-{{section.id }} .nav-pills > li.active > a,
+      #shopify-section-{{section.id }} .nav-pills > li.active > a:focus,
+      #shopify-section-{{section.id }} .nav-pills > li.active > a:hover {
+        background-color: {{ settings.color_skin }};
+      }
+
+      #shopify-section-{{section.id }} .nav-pills > li > a {
+        border-radius: 5px;
+      }
+
+      /* Transition effect for the tab content */
+      #shopify-section-{{section.id }} .tab-content > .tab-pane {
+        display: none; /* Hide all tab content by default */
+      }
+      #shopify-section-{{section.id }} .tab-content > .active {
+        animation: slideIn 0.5s forwards;
+        display: block; /* Show the active tab content */
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+</style>
+<script>
+  function handelize(str) {
+    {% comment %} str = str
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/([^\w]+|\s+)/g, '-') // Replace space and other characters by hyphen
+      .replace(/\-\-+/g, '-') // Replaces multiple hyphens by one hyphen
+      .replace(/(^-+|-+$)/g, '') // Remove extra hyphens from beginning or end of the string
+      .toLowerCase(); // To lowercase {% endcomment %}
+
+    return str;
+  }
+  // The buildUrl function creates the query string on the values of the IDs in the HTML below
+  function buildUrl(blockId, noOfFilters, filter_type) {
+    let url = ''; // Change this line to your home page URL
+    let qs = '';
+    let filter1 = handelize(document.querySelector(`#filterSel1${blockId}`).value);
+    if(filter1 && filter_type == 'default'){
+      qs = filter1;
+    } else if(filter1 && filter_type == 'sdapp'){
+      qs = 'filter.p.tag=' + filter1;
+    }
+    let filter2 = handelize(document.querySelector(`#filterSel2${blockId}`).value);
+    if(filter2 && filter_type == 'default'){
+      qs = filter1 + '+' + filter2;
+    } else if(filter2 && filter_type == 'sdapp'){
+      qs = qs + '&filter.p.tag=' + filter2;
+    }
+    if (noOfFilters > 2) {
+      let filter3 = handelize(document.querySelector(`#filterSel3${blockId}`).value);
+      if(filter3 && filter_type == 'default'){
+        qs = qs + '+' + filter3;
+      } else if(filter3 && filter_type == 'sdapp'){
+        qs = qs + '&filter.p.tag=' + filter3;
+      }
+    }
+    if (noOfFilters > 3) {
+      let filter4 = handelize(document.querySelector(`#filterSel4${blockId}`).value);
+      if(filter4 && filter_type == 'default'){
+        qs = qs + '+' + filter4;
+      } else if(filter4 && filter_type == 'sdapp'){
+        qs = qs + '&filter.p.tag=' + filter4;
+      }
+    }
+    if (qs.length > 0) {
+      if(filter_type == 'default'){
+        url = url + '/collections/all/' + qs;
+      } else if(filter_type == 'sdapp'){
+        url = url + '/collections/all?' + qs;
+      }
+    }
+    return url;
+  }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Function to decode the URL part and split it by either a space or a plus sign
+      function decodeAndSplitUrlPart(part) {
+        return decodeURIComponent(part).split(/[\s+]+/);
+      }
+    
+      // Find all select elements within the closest .booking-form class div
+      const bookingForm = document.querySelector('.booking-form');
+      const selects = bookingForm.querySelectorAll('select');
+    
+      // Extract the last part of the URL path and split it
+      const urlPathSegments = window.location.pathname.split('/');
+      const lastSegment = urlPathSegments[urlPathSegments.length - 1];
+      const urlParts = decodeAndSplitUrlPart(lastSegment);
+    
+      // Function to set select value by matching option text
+      function setSelectValue(selectElement, value) {
+        for (let option of selectElement.options) {
+          if (option.text === value) {
+            selectElement.value = option.value;
+            return true; // Value was found and set
+          }
+        }
+        return false; // Value was not found
+      }
+    
+      // Set values and trigger change events sequentially
+      let delay = 0; // Start with no delay
+      urlParts.forEach((part, index) => {
+        if (selects.length > index) {
+          setTimeout(() => { // Use setTimeout to introduce a delay for each iteration
+            if(setSelectValue(selects[index], part)) {
+              selects[index].dispatchEvent(new Event('change'));
+            }
+          }, delay);
+          delay += 300; // Increment delay for subsequent selects to ensure they have time to populate
+        }
+      });
+    });
+    
+</script>

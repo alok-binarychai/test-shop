@@ -1,0 +1,181 @@
+<div class="main-row corporate-full {% if section.settings.fullwidth == true %}full-width {% endif  %} {% if section.settings.background == true %} layer-background {% endif  %} {% if section.settings.layout == 'feature-service2' or section.settings.layout == 'feature-service4' %} ma2{% endif  %} {% if section.settings.top_margin %} margin-top{% endif %}" data-section-id="{{ section.id }}">
+  <div class="container{% if section.settings.bottom_border %} border-bottom{% endif %}">
+    <div class="row">
+      <div class="main-col col-sm-12 col-md-12">
+        <div class="row sub-row">
+          <div class="sub-col col-sm-12 col-md-12">
+            {% include section.settings.layout %}
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+</div>
+<style>
+  {% if section.settings.background %}
+  #shopify-section-{{section.id }} .layer-background, #shopify-section-{{section.id }} .ma-corporate-about .block-wrapper i {
+    background: {{ section.settings.background_color }};
+  }
+  {%- endif %}
+  {% if section.settings.heading_color != '#fff' -%}
+  #shopify-section-{{section.id }} .module-title h2, #shopify-section-{{section.id }} h3,
+  #shopify-section-{{section.id }} h4 {
+    color: {{ section.settings.heading_color }};
+  }
+  {%- endif %}
+  {% if section.settings.description_color != '#5a6069' -%}
+  #shopify-section-{{section.id }} .module-title .sub-title,
+  #shopify-section-{{section.id }} p {
+    color: {{ section.settings.description_color }};
+  }
+  #shopify-section-{{section.id }} .static1-elomus2 .icon {
+    background-color: {{ section.settings.description_color }};
+  }
+    {% if section.settings.layout == 'feature-service2'%}
+    .ma-corporate-about1 {
+      border-top: 1px solid {{ section.settings.description_color | color_modify: 'alpha', 0.4 }};
+    }
+    .ma-corporate-about1 .col:nth-child(2) {
+      border-left: 1px solid {{ section.settings.description_color | color_modify: 'alpha', 0.4 }};
+      border-right: 1px solid {{ section.settings.description_color | color_modify: 'alpha', 0.4 }};
+    }
+    {%- endif %}
+  {%- endif %}
+  {% if section.settings.image != blank %}
+  #shopify-section-{{section.id }} .layer-background {
+    background-image: url('{{ section.settings.image | img_url: 'master' }}');
+  }
+  {% endif %}
+</style>
+{% schema %}
+{
+  "name": "Service Boxes section",
+  "max_blocks": 5,
+  "settings": [
+	{
+        "type": "select",
+        "id": "layout",
+        "label": "Select layout design",
+        "options": [
+            {
+              "value": "feature-service1",
+              "label": "Design 1"
+            },
+			{
+              "value": "feature-service2",
+              "label": "Design 2"
+            }
+          ]	
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Title Color",
+      "default": "#fff",
+      "info": "Used for top heading and features Text1"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#5a6069",
+      "info": "Used for heading and blocks description"
+    },
+	{
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Set Div fullwidth?",
+      "default": false
+    },
+	{
+      "type": "checkbox",
+      "id": "background",
+      "label": "Add Background",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image",
+      "info": "1920 width recommended"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Sections Background Color",
+      "info": "This option allows you to set different background color than default one for the section.",
+      "default": "#181b23"
+    },
+    {
+      "type": "checkbox",
+      "id": "top_margin",
+      "label": "Add top margin?",
+      "info": "White empty space above section. Won't apply when full width option enabled.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_padding",
+      "label": "Add bottom margin?",
+      "info": "White empty space below section. Won't apply when full width option enabled.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_border",
+      "label": "Add bottom border?",
+      "info": "Border line below section",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "box",
+      "name": "Feature box",
+      "settings": [
+		{
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon Image",
+          "info": "Used for adding Icon Images. Get icon from [this link](https:\/\/www.google.com\/search?q=image+icons). Ideal size 56x56"
+        },
+        {
+            "type": "checkbox",
+            "id": "use_feature_service_icon",
+            "label": "Use Font Icon?",
+            "default": true
+        },
+		{
+          "type": "text",
+          "id": "feature_service_icon",
+          "label": "Font Icon Code",
+		  "default": "fa-shopping-bag",
+		  "info": "Used for adding Icon fonts. Get icon codes from [this link](https:\/\/fontawesome.com\/cheatsheet\/). \'fa-\' should be prepended to each icon e.g. \'fa-shopping-bag\' . For brand icons \'fab ' also needs to be prepended."
+		},
+        {
+          "type": "text",
+          "id": "feature_service_title",
+          "label": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "feature_service_description",
+          "label": "Feature description"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "Service box section",
+    "category": "Feature Sections",
+    "blocks": [
+      {
+        "type": "box"
+      },
+      {
+        "type": "box"
+      }
+    ]
+  }]
+}
+{% endschema %}

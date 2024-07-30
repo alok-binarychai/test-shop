@@ -1,0 +1,1378 @@
+{% liquid
+    render 'section-start', fluid: false, id: 'product-product'
+    render 'product-page-section'
+    render 'section-end'
+  %}
+  {% schema %}
+  {
+    "name": "Product Page",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "[Video Guide for product page](https://youtu.be/Agbw0GrE48U?list=PLvJCnPMUAdwr6XxWVo_f9dkVRh8GNCXoa)"
+      },
+      {
+        "type": "select",
+        "id": "product_page_layout",
+        "label": "Page Slider layout",
+        "options": [
+          {
+            "value": "horizontal_thumbs",
+            "label": "Horizontal Thumbs"
+          },
+          {
+            "value": "vertical_thumbs",
+            "label": "Vertical Thumbs Left"
+          },
+          {
+            "value": "vertical_thumbs_right",
+            "label": "Vertical Thumbs Right"
+          },
+          {
+            "value": "sticky_layout",
+            "label": "Vertical Image Stack"
+          },
+          {
+            "value": "horizontal_slide_grid",
+            "label": "Grid layout"
+          },
+          {
+            "value": "horizontal_slide_full",
+            "label": "Horizontal Slide Full"
+          }
+        ],
+        "default": "horizontal_thumbs"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_zoom",
+        "label": "Enable Image Zoom",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_preload",
+        "label": "Enable Image Preload",
+        "default": false,
+        "info": "Pre-loading product images, to avoid a lag when a thumbnail is clicked."
+      },
+      {
+        "type": "select",
+        "id": "roundness",
+        "label": "Image Border Roundness",
+        "default": "rounded-default",
+        "options": [
+          {
+            "value": "rounded-default",
+            "label": "Theme default"
+          },
+          {
+            "value": "rounded-0",
+            "label": "0"
+          },
+          {
+            "value": "rounded-1",
+            "label": "1"
+          },
+          {
+            "value": "rounded-2",
+            "label": "2"
+          },
+          {
+            "value": "rounded-3",
+            "label": "3"
+          },
+          {
+            "value": "rounded-4",
+            "label": "4"
+          },
+          {
+            "value": "rounded-5",
+            "label": "5"
+          }
+        ],
+        "info": "This option allows you to set different border roundness/radius than default one for the section. Default option applies the settings from Theme settings > general tab."
+      },
+      {
+        "type": "select",
+        "id": "shadow",
+        "label": "Image Border Shadow",
+        "default": "shadow-sm",
+        "options": [
+          {
+            "value": "shadow-default",
+            "label": "Theme default"
+          },
+          {
+            "value": "shadow-none",
+            "label": "No Shadow"
+          },
+          {
+            "value": "shadow-sm",
+            "label": "Small Shadow"
+          },
+          {
+            "value": "shadow",
+            "label": "Regular Shadow"
+          },
+          {
+            "value": "shadow-lg",
+            "label": "Large Shadow"
+          }
+        ],
+        "info": "This option allows you to set different shadow than default one for the section. Default option applies the settings from Theme settings > general tab. If you want to use theme default shadow then select 'Theme default' option."
+      },
+      {
+        "type": "select",
+        "id": "product_thumbs_layout",
+        "label": "Product Thumbs",
+        "options": [
+          {
+            "value": "show_all",
+            "label": "Show on Mobile and Desktop"
+          },
+          {
+            "value": "hide_mobile",
+            "label": "Hide on Mobile"
+          },
+          {
+            "value": "hide_desktop",
+            "label": "Hide on Desktop"
+          },
+          {
+            "value": "hide_all",
+            "label": "Hide on Mobile and Desktop"
+          }
+        ],
+        "default": "show_all"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_thumbs_border",
+        "label": "Add Thumbs Border",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_thumbs_shadow",
+        "label": "Add Thumbs Shadow",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "product_thumbs_roundness",
+        "label": "Product Thumbs Roundness",
+        "default": "rounded-default",
+        "options": [
+          {
+            "value": "rounded-default",
+            "label": "Theme default"
+          },
+          {
+            "value": "rounded-0",
+            "label": "0"
+          },
+          {
+            "value": "rounded-1",
+            "label": "1"
+          },
+          {
+            "value": "rounded-2",
+            "label": "2"
+          },
+          {
+            "value": "rounded-3",
+            "label": "3"
+          },
+          {
+            "value": "rounded-4",
+            "label": "4"
+          },
+          {
+            "value": "rounded-5",
+            "label": "5"
+          }
+        ],
+        "info": "This option allows you to set different border roundness/radius than default one for the section. Default option applies the settings from Theme settings > general tab."
+      },
+      {
+        "type": "checkbox",
+        "id": "product_sticky_cart",
+        "label": "Show Bottom Sticky Add to Cart Bar?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_quantity_enable_sticky_cart",
+        "label": "Show quantity selector on Sticky Bar?",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "fullwidth",
+        "label": "Section Width Setting",
+        "default": "0",
+        "options": [
+          {
+            "value": "0",
+            "label": "Standard Container Width"
+          },
+          {
+            "value": "1",
+            "label": "Full Width with Margins"
+          },
+          {
+            "value": "2",
+            "label": "Full Width, No Margins"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "background",
+        "label": "Add Background",
+        "default": "none",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "color",
+            "label": "Color"
+          },
+          {
+            "value": "gradient",
+            "label": "Gradient"
+          },
+          {
+            "value": "image",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Section Background Color",
+        "info": "Choose a background color for the section, different from the default setting.",
+        "default": "#f8f8f8"
+      },
+      {
+        "type": "color_background",
+        "id": "background_gradient",
+        "label": "Gradient Background",
+        "default": "linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)",
+        "info": "Select a linear or radial gradient background. Use default options or create your own [here](https://cssgradient.io) or [here](https://mycolor.space)."
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Section Background Image",
+        "info": "Choose an image for the section's background. If left empty, the background color setting will be used."
+      },
+      {
+        "type": "checkbox",
+        "id": "top_margin",
+        "label": "Enable Top Margin?",
+        "info": "Include top margin space outside the section.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "top_padding",
+        "label": "Enable Top Padding?",
+        "info": "Insert a padding space at the beginning of the section.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "bottom_padding",
+        "label": "Enable Bottom Padding?",
+        "info": "Insert a padding space at the end of the section.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "bottom_margin",
+        "label": "Enable Bottom Margin?",
+        "info": "Include bottom margin space outside the section.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "bottom_border",
+        "label": "Display Bottom Border?",
+        "info": "Display a line at the bottom to denote section separation",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Metafield/Dynamic Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "text",
+            "default": "Title : ",
+            "label": "Select the Metafield to show"
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-1"
+          }
+        ]
+      },
+      {
+        "type": "title",
+        "name": "Title",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-1"
+          }
+        ]
+      },
+      {
+        "type": "price",
+        "name": "Price",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "text_size",
+            "label": "Text Size",
+            "options": [
+              {
+                "value": "fs-1",
+                "label": "Small"
+              },
+              {
+                "value": "fs-2",
+                "label": "Medium"
+              },
+              {
+                "value": "fs-3",
+                "label": "Base"
+              },
+              {
+                "value": "fs-4",
+                "label": "Large"
+              },
+              {
+                "value": "fs-5",
+                "label": "Extra Large"
+              },
+              {
+                "value": "fs-6",
+                "label": "Huge"
+              }
+            ],
+            "default": "fs-3"
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "summay",
+        "name": "Product Summary",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_summary_stripped",
+            "label": "Strip Product Summary",
+            "default": true,
+            "info": "Strips html tags to show text without format"
+          },
+          {
+            "type": "text",
+            "id": "product_summary_words",
+            "label": "Words count on summary area",
+            "default": "30"
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "reviews",
+        "name": "Product Reviews",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "vendor",
+        "name": "Product Vendor",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "deal",
+        "name": "Product Deals Timer",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "availability",
+        "name": "Product Variant Stock",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "sku",
+        "name": "Product Variant SKU",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "barcode",
+        "name": "Product Variant Barcode",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "quantity",
+        "name": "Quantity & Wishlist",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "product_quantity_message",
+            "label": "Show remaining quantity message",
+            "info": "Shown when less than 10 items are in stock",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "product_quantity_enable",
+            "label": "Show quantity selector",
+            "default": true
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "size-chart",
+        "name": "Size Chart",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "size_chart_src",
+            "label": "Size Chart Option",
+            "options": [
+              {
+                "value": "image",
+                "label": "Image"
+              },
+              {
+                "value": "html",
+                "label": "HTML"
+              },
+              {
+                "value": "page",
+                "label": "Page"
+              },
+              {
+                "value": "none",
+                "label": "None"
+              }
+            ],
+            "default": "html"
+          },
+          {
+            "type": "image_picker",
+            "id": "size_chart_image",
+            "label": "Size Chart Image",
+            "info": "Upload Size Chart image to show on product page."
+          },
+          {
+            "type": "html",
+            "id": "size_chart_html",
+            "label": "Size Chart HTML",
+            "default": "<table class=\"size-chart-table\">\n  <thead>\n    <tr>\n      <th>Size</th>\n      <th>Waist</th>\n      <th>Hip</th>\n      <th>Length</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td>XS</td>\n      <td>24</td>\n      <td>34</td>\n      <td>35</td>\n    </tr>\n    <tr>\n      <td>S</td>\n      <td>26</td>\n      <td>36</td>\n      <td>36</td>\n    </tr>\n    <tr>\n      <td>M</td>\n      <td>28</td>\n      <td>38</td>\n      <td>37</td>\n    </tr>\n    <tr>\n      <td>L</td>\n      <td>30</td>\n      <td>40</td>\n      <td>38</td>\n    </tr>\n    <tr>\n      <td>XL</td>\n      <td>32</td>\n      <td>42</td>\n      <td>39</td>\n    </tr>\n  </tbody>\n</table>"
+          },
+          {
+            "type": "page",
+            "id": "size_chart_page",
+            "label": "Size Chart Page"
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "product-variants",
+        "name": "Product Variants",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "show_variant_swatches",
+            "label": "Variant Swatch",
+            "options": [
+              {
+                "value": "false",
+                "label": "None"
+              },
+              {
+                "value": "color",
+                "label": "Color"
+              },
+              {
+                "value": "thumb",
+                "label": "Variant Image"
+              }
+            ],
+            "default": "color",
+            "info": "Incase of variant image, it will show colors if variant images are not added to the variants."
+          },
+          {
+            "type": "select",
+            "id": "variant_title_display",
+            "label": "Variant Title Display",
+            "options": [
+              {
+                "value": "",
+                "label": "Show"
+              },
+              {
+                "value": "hide",
+                "label": "Hide"
+              }
+            ],
+            "default": ""
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "form-buy",
+        "name": "Product Buy Buttons",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "overwrite_addtocart_color",
+            "label": "Override default Add to Cart Color?",
+            "default": false
+          },
+          {
+            "type": "color",
+            "id": "addtocart_color_text",
+            "label": "Text Color",
+            "default": "#454545"
+          },
+          {
+            "type": "color",
+            "id": "addtocart_color_bg",
+            "label": "Background Color",
+            "default": "#fff"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_buy_now",
+            "label": "Show Buy Now button?",
+            "info": "This button will redirect direct to checkout page.",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "overwrite_buy_now_color",
+            "label": "Override default Buy Now button Color?",
+            "default": false
+          },
+          {
+            "type": "color",
+            "id": "buy_now_color_text",
+            "label": "Text Color",
+            "default": "#454545"
+          },
+          {
+            "type": "color",
+            "id": "buy_now_color_bg",
+            "label": "Background Color",
+            "default": "#fff"
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "tags",
+        "name": "Product Tags info",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "collections",
+        "name": "Product Collections info",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "trust-badge",
+        "name": "Trust Badge",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "trust_badge_image",
+            "label": "Image",
+            "info": "Upload Trust Badge image to show on product page. Remove to hide"
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-2"
+          }
+        ]
+      },
+      {
+        "type": "social-sharing",
+        "name": "Sharing Links",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-2"
+          }
+        ]
+      },
+      {
+        "type": "collapse_block",
+        "name": "Collapse Block",
+        "limit": 5,
+        "settings": [
+          {
+            "type": "inline_richtext",
+            "id": "collapse_title",
+            "label": "Title",
+            "default": "Product Details"
+          },
+          {
+            "type": "checkbox",
+            "id": "collapse_show_title",
+            "label": "Display Title?",
+            "default": true,
+            "info": "If the title is hidden, it cannot be expanded/collapsed."
+          },
+          {
+            "type": "checkbox",
+            "id": "collapse_open",
+            "label": "Open by default?",
+            "default": false
+          },
+          {
+            "type": "select",
+            "id": "collapse_type",
+            "label": "Content Type",
+            "options": [
+              {
+                "value": "description",
+                "label": "Product Description"
+              },
+              {
+                "value": "custom",
+                "label": "Custom Content"
+              }
+            ],
+            "default": "custom"
+          },
+          {
+            "type": "richtext",
+            "id": "collapse_content",
+            "label": "Content",
+            "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non maximus erat, et bibendum leo. Duis ut massa ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed pulvinar rhoncus risus vestibulum luctus. Nunc pretium, mauris id maximus interdum, odio magna vulputate urna, sed fringilla dui sem vitae tortor.</p>"
+          },
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-0"
+          }
+        ]
+      },
+      {
+        "type": "divider",
+        "name": "Spacing Divider",
+        "settings": [
+          {
+            "type": "select",
+            "id": "mt",
+            "label": "Margin Top",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-3"
+          },
+          {
+            "type": "select",
+            "id": "mb",
+            "label": "Margin Bottom",
+            "options": [
+              {
+                "value": "-0",
+                "label": "0"
+              },
+              {
+                "value": "-1",
+                "label": "1"
+              },
+              {
+                "value": "-2",
+                "label": "2"
+              },
+              {
+                "value": "-3",
+                "label": "3"
+              },
+              {
+                "value": "-4",
+                "label": "4"
+              },
+              {
+                "value": "-5",
+                "label": "5"
+              }
+            ],
+            "default": "-3"
+          }
+        ]
+      },
+      {
+        "type": "@app"
+      }
+    ],
+    "presets": [
+  
+    ]
+  }
+  {% endschema %}
+  {% comment %}
+    {% if settings.grid_auto_resize != 'false' -%}
+    <script>
+      // Equal height grid divs
+      document.addEventListener("DOMContentLoaded", function() {
+        mt.resizethumbs();
+      });
+  
+      window.addEventListener("resize", function() {
+        setTimeout(function () {
+          mt.resizethumbs();
+        }, 200);
+      });
+    </script>
+    {% endif %}
+  {% endcomment %}
+  

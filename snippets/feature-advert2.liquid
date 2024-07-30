@@ -1,0 +1,30 @@
+<div class="banner-static static-bottom-aero1 {% if section.settings.bottom_padding %} padding-bottom{% endif %} {% if section.settings.bottom_border %} border-bottom{% endif %}">
+  {% if section.blocks.size > 0 %}
+  {% for block in section.blocks limit:2 %}
+  <div class="col">
+    <div class="image">
+      <a href="{{ block.settings.link }}" class="image-wrapper">
+        {% if block.settings.image != blank %}
+        <img {% if settings.lazyloading_enable %} class="lazyload" data-{% endif %}src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.topheading }}"/>
+        {% endif %}          
+          <span class="text {{ block.settings.ad_align }}" style="text-align:{{ block.settings.ad_align }}">
+          {% if block.settings.topheading != blank %} 
+          <span class="text1" style="color:{{ block.settings.topheading_color }}">{{ block.settings.topheading }}</span>
+          {% endif %}
+          {% if block.settings.heading != blank %} 
+          <span class="text2" style="color:{{ block.settings.heading_color }}">{{ block.settings.heading }}</span>
+          {% endif %}
+          {% if block.settings.description != blank %} 
+          <span class="text3" style="color:{{ block.settings.description_color }}">{{ block.settings.description }}</span>
+          {% endif %}
+          {% if block.settings.link_text != blank %} 
+          <span class="link" style="color:{{ block.settings.link_color }}">{{ block.settings.link_text }}</span>
+          {% endif %}
+        </span>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+

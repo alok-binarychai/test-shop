@@ -1,0 +1,28 @@
+{%- assign base_font = settings.type_base_family %}
+{%- assign base_font_2 = base_font | font_modify: 'weight', '200' -%}
+{%- assign base_font_5 = base_font | font_modify: 'weight', '500' -%}
+{%- assign base_font_6 = base_font | font_modify: 'weight', '600' -%}
+{%- assign base_font_7 = base_font | font_modify: 'weight', '700' -%}
+
+{%- assign header_font = settings.type_header_family %}
+{%- assign header_font_2 = header_font | font_modify: 'weight', '200' -%}
+{%- assign header_font_5 = header_font | font_modify: 'weight', '500' -%}
+{%- assign header_font_6 = header_font | font_modify: 'weight', '600' -%}
+{%- assign header_font_7 = header_font | font_modify: 'weight', '700' -%}
+
+<link rel="preload" as="font" href="{{ header_font | font_url }}" type="font/woff2" crossorigin>
+<link rel="preload" as="font" href="{{ base_font | font_url }}" type="font/woff2" crossorigin>
+
+<style>
+  {{ base_font | font_face: font_display: 'swap' }}
+  {{ base_font_2 | font_face: font_display: 'swap' }}
+  {{ base_font_5 | font_face: font_display: 'swap' }}
+  {{ base_font_6 | font_face: font_display: 'swap' }}
+  {{ base_font_7 | font_face: font_display: 'swap' }}
+
+  {{ header_font | font_face: font_display: 'swap' }}
+  {{ header_font_2 | font_face: font_display: 'swap' }}
+  {{ header_font_5 | font_face: font_display: 'swap' }}
+  {{ header_font_6 | font_face: font_display: 'swap' }}
+  {{ header_font_7 | font_face: font_display: 'swap' }}
+</style>

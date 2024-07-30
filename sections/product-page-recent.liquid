@@ -1,0 +1,87 @@
+<!--
+  product_section - start
+  ==================================================
+-->
+{% liquid
+  render 'section-start', fluid: false
+  render 'recently-viewed'
+  render 'section-end'
+%}
+<!--
+  product_section - end
+  ==================================================
+-->
+{% schema %}
+{
+  "name": "Recent Products",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the recently seen products"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Title",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "items",
+      "label": "No of products to show in a row",
+      "min": 3,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "info": "Large devices (desktops) will show this number of products, medium devices (tablets) will show 2 products, and small devices (mobiles) will show 1 products."
+    },
+    {
+      "type": "range",
+      "id": "products_fetch_count",
+      "label": "Maximum No of products to fetch",
+      "info": "Products count depend on related products. If there are less related products, then it will show less products.",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "top_margin",
+      "label": "Enable Top Margin?",
+      "info": "Include top margin space outside the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "top_padding",
+      "label": "Enable Top Padding?",
+      "info": "Insert a padding space at the beginning of the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_padding",
+      "label": "Enable Bottom Padding?",
+      "info": "Insert a padding space at the end of the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_margin",
+      "label": "Enable Bottom Margin?",
+      "info": "Include bottom margin space outside the section.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "bottom_border",
+      "label": "Display Bottom Border?",
+      "info": "Display a line at the bottom to denote section separation",
+      "default": false
+    }
+  ],
+  "blocks": [],
+  "presets": []
+}
+{% endschema %}
